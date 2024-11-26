@@ -1,0 +1,33 @@
+CREATE DATABASE ecommercern;
+
+CREATE TABLE product (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  title VARCHAR(75) NOT NULL,
+  description text,
+  image TEXT NOT NULL,
+  price NUMERIC NOT NULL
+);
+
+CREATE TABLE cart (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY
+);
+
+CREATE TABLE cart_item (
+  cart_id INTEGER NOT NULL REFERENCES cart(id) ON DELETE CASCADE,
+  product_id INTEGER NOT NULL REFERENCES product(id),
+  quantity INTEGER NOT NULL,
+  PRIMARY KEY (cart_id, product_id)
+);
+
+CREATE TABLE "order" (
+  id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  total INTEGER NOT NULL,
+  createdAt TIMESTAMP DEFAULT now() NOT NULL
+);
+
+CREATE TABLE order_item (
+  order_id INTEGER NOT NULL REFERENCES "order"(id) ON DELETE CASCADE,
+  product_id INTEGER NOT NULL REFERENCES product(id),
+  quantity INTEGER NOT NULL,
+  PRIMARY KEY (order_id, product_id)
+);
