@@ -8,7 +8,7 @@ export default function Orders(): JSX.Element {
 
   return (
     <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-      <Text style={styles.title}>Orders</Text>
+      <Text style={[styles.title, { color: color.primaryText }]}>Orders</Text>
     </View>
   );
 }

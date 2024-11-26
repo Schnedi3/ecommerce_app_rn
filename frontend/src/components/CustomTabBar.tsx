@@ -13,7 +13,7 @@ export default function CustomTabBar({
   const color = Colors[colorTheme ?? "light"];
 
   return (
-    <View style={[styles.tabBar, { backgroundColor: color.secondaryBg }]}>
+    <View style={[styles.tabBar, { backgroundColor: color.primaryBg }]}>
       {state.routes.map((route: any, index: number) => {
         const { options } = descriptors[route.key];
         const label =

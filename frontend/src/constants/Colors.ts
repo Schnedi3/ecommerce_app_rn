@@ -9,6 +9,7 @@ export default {
     invertedTextDisabled: "#d4d4d8",
     disabled: "#a1a1aa",
     accent: "#0ea5e9",
+    border: "rgba(0, 0, 0, 0.2)",
   },
   dark: {
     primaryBg: "#18181b",
@@ -20,5 +21,6 @@ export default {
     invertedTextDisabled: "#71717a",
     disabled: "#a1a1aa",
     accent: "#f472b6",
+    border: "rgba(255, 255, 255, 0.2)",
   },
 };
