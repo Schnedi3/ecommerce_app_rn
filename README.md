@@ -1,0 +1,3 @@
+# Stripe implementation
+- Expo
+- TypeScript
