@@ -1,5 +1,8 @@
 import {
+  ActivityIndicator,
   Dimensions,
+  Image,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -19,29 +22,31 @@ export default function Home(): JSX.Element {
   const color = Colors[colorTheme ?? "light"];
   const { data: products } = useGetProducts();
 
-  // if (isLoading) return <Text>Loading...</Text>;
-  // if (error) return <Text>{error.message}</Text>;
+  if (!products) {
+    return (
+      <View style={[styles.loading, { backgroundColor: color.secondaryBg }]}>
+        <ActivityIndicator size="large" color={color.accent} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={{ backgroundColor: color.secondaryBg }}>
-      {products ? (
-        <View style={styles.productsContainer}>
-          {products.map((product: IProduct) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </View>
-      ) : (
-        <View style={[styles.empty, { backgroundColor: color.secondaryBg }]}>
-          <Text style={[styles.title, { color: color.primaryText }]}>
-            Products
-          </Text>
-        </View>
-      )}
+      <View style={styles.productsContainer}>
+        {products.map((product: IProduct) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
+      </View>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   productsContainer: {
     height: width * 0.55,
     flexDirection: "row",
@@ -49,15 +54,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     rowGap: 20,
     margin: 20,
-  },
-  empty: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    fontSize: 60,
-    fontWeight: "bold",
-    opacity: 0.35,
   },
 });

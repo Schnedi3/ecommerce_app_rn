@@ -1,14 +1,13 @@
-import { StatusBar, StyleSheet, useColorScheme } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import Colors from "../constants/Colors";
+import Colors from "@/src/constants/Colors";
 
 const queryClient = new QueryClient();
 
@@ -18,23 +17,24 @@ export default function RootLayout(): JSX.Element {
 
   return (
     <ThemeProvider value={colorTheme === "dark" ? DarkTheme : DefaultTheme}>
-      <SafeAreaView style={styles.container}>
-        <QueryClientProvider client={queryClient}>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-          <StatusBar
-            backgroundColor={color.primaryBg}
-            barStyle={colorTheme === "dark" ? "light-content" : "dark-content"}
+      <QueryClientProvider client={queryClient}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="detail/[id]"
+            options={{
+              headerTitle: "Details",
+              headerTitleAlign: "center",
+              headerTitleStyle: { color: color.accent },
+              animation: "slide_from_right",
+            }}
           />
-        </QueryClientProvider>
-      </SafeAreaView>
+        </Stack>
+        <StatusBar
+          backgroundColor={color.primaryBg}
+          barStyle={colorTheme === "dark" ? "light-content" : "dark-content"}
+        />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

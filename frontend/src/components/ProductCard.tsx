@@ -1,14 +1,16 @@
 import {
   Dimensions,
   Image,
+  Pressable,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from "react-native";
+import { router } from "expo-router";
 
-import { IProduct } from "../types/types";
-import Colors from "../constants/Colors";
+import { IProduct } from "@/src/types/types";
+import Colors from "@/src/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
@@ -20,10 +22,10 @@ export default function ProductCard({
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
-  const { title, image, price } = product;
+  const { id, title, image, price } = product;
 
   return (
-    <View
+    <Pressable
       style={[
         styles.container,
         {
@@ -31,6 +33,12 @@ export default function ProductCard({
           borderColor: color.border,
         },
       ]}
+      onPress={() =>
+        router.push({
+          pathname: "/detail/[id]",
+          params: { id },
+        })
+      }
     >
       <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.info}>
@@ -41,7 +49,7 @@ export default function ProductCard({
           {price}€
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 }
 

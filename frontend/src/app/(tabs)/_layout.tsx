@@ -1,4 +1,4 @@
-import { Button, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { Tabs } from "expo-router";
 
 import CustomTabBar from "@/src/components/CustomTabBar";
@@ -14,9 +14,12 @@ export default function TabLayout(): JSX.Element {
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: { backgroundColor: color.primaryBg },
+        headerTintColor: color.accent,
+        headerShadowVisible: false,
+        animation: "shift",
       }}
     >
-      <Tabs.Screen name="index" options={{ title: "Products" }} />
+      <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="orders" options={{ title: "Orders" }} />
     </Tabs>
   );
