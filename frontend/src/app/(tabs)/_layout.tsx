@@ -15,8 +15,6 @@ export default function TabLayout(): JSX.Element {
         headerTitleAlign: "center",
         headerStyle: { backgroundColor: color.primaryBg },
         headerTintColor: color.accent,
-        headerShadowVisible: false,
-        animation: "shift",
       }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />

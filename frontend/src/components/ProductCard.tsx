@@ -27,9 +27,8 @@ export default function ProductCard({
   return (
     <Pressable
       style={[
-        styles.container,
+        styles.singleCard,
         {
-          backgroundColor: color.primaryBg,
           borderColor: color.border,
         },
       ]}
@@ -54,16 +53,18 @@ export default function ProductCard({
 }
 
 const styles = StyleSheet.create({
-  container: {
+  singleCard: {
     width: width / 2 - 30,
+    height: width * 0.7,
     borderWidth: 1,
     borderRadius: 10,
-    gap: 10,
+    justifyContent: "space-between",
     padding: 10,
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
   },
   image: {
     width: "100%",
-    height: "100%",
+    height: "80%",
     borderRadius: 10,
   },
   info: {

@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   tabBar: {
     paddingVertical: 14,
     flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "rgba(0, 0, 0, 0.1)",
+    elevation: 15,
   },
 });

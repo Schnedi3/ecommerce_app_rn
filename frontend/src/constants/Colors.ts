@@ -1,7 +1,7 @@
 export default {
   light: {
-    primaryBg: "#fafafa",
-    secondaryBg: "#ffffff",
+    primaryBg: "#ebedf0",
+    secondaryBg: "#f8f8f8",
     invertedBg: "#27272a",
     primaryText: "#1e293b",
     secondaryText: "#475569",
@@ -12,7 +12,7 @@ export default {
     border: "rgba(0, 0, 0, 0.2)",
   },
   dark: {
-    primaryBg: "#18181b",
+    primaryBg: "#202024",
     secondaryBg: "#27272a",
     invertedBg: "#fafafa",
     primaryText: "#fafafa",

@@ -1,11 +1,7 @@
 import {
   ActivityIndicator,
-  Dimensions,
-  Image,
-  Pressable,
-  ScrollView,
+  FlatList,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from "react-native";
@@ -13,9 +9,6 @@ import {
 import Colors from "@/src/constants/Colors";
 import { useGetProducts } from "@/src/api/product";
 import ProductCard from "@/src/components/ProductCard";
-import { IProduct } from "@/src/types/types";
-
-const { width } = Dimensions.get("window");
 
 export default function Home(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -31,13 +24,15 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <ScrollView style={{ backgroundColor: color.secondaryBg }}>
-      <View style={styles.productsContainer}>
-        {products.map((product: IProduct) => (
-          <ProductCard product={product} key={product.id} />
-        ))}
-      </View>
-    </ScrollView>
+    <FlatList
+      style={{ backgroundColor: color.secondaryBg }}
+      contentContainerStyle={styles.contentContainer}
+      columnWrapperStyle={{ justifyContent: "space-between" }}
+      data={products}
+      numColumns={2}
+      renderItem={({ item }) => <ProductCard product={item} />}
+      keyExtractor={(item) => item.id}
+    />
   );
 }
 
@@ -47,12 +42,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  productsContainer: {
-    height: width * 0.55,
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    rowGap: 20,
-    margin: 20,
+  contentContainer: {
+    padding: 20,
+    gap: 20,
   },
 });

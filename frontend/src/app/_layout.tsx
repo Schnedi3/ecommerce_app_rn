@@ -18,7 +18,9 @@ export default function RootLayout(): JSX.Element {
   return (
     <ThemeProvider value={colorTheme === "dark" ? DarkTheme : DefaultTheme}>
       <QueryClientProvider client={queryClient}>
-        <Stack>
+        <Stack
+          screenOptions={{ headerStyle: { backgroundColor: color.primaryBg } }}
+        >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen
             name="detail/[id]"
