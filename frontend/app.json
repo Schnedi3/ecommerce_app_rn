@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "stripe-app",
+    "name": "ecommerce-app",
     "owner": "schnedi",
-    "slug": "stripe-app",
+    "slug": "ecommerce-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.schnedi.ecommerceapp"
     },
     "web": {
       "bundler": "metro",
