@@ -8,7 +8,7 @@ import {
   View,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import { useOAuth, useUser } from "@clerk/clerk-expo";
+import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 
 import Colors from "@/src/constants/Colors";
 import { googleOAuth } from "@/src/lib/token";
@@ -20,6 +20,7 @@ export default function auth(): JSX.Element {
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
   const { user } = useUser();
+  const { signOut } = useClerk();
   const { mutate: saveUser } = useSaveUser();
 
   const handleGoogleLogin = useCallback(async () => {
@@ -60,7 +61,7 @@ export default function auth(): JSX.Element {
           { backgroundColor: color.invertedBg },
           pressed && { backgroundColor: color.accent },
         ]}
-        onPress={handleGoogleLogin}
+        onPress={user ? () => signOut() : handleGoogleLogin}
       >
         <AntDesign size={28} name="google" color={color.invertedText} />
         <Text style={[styles.loginText, { color: color.invertedText }]}>
