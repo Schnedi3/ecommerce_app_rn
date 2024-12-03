@@ -2,6 +2,7 @@ import { StatusBar, useColorScheme, View } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
+  getFocusedRouteNameFromRoute,
   ThemeProvider,
 } from "@react-navigation/native";
 import { router, Stack } from "expo-router";
@@ -40,9 +41,27 @@ function RootLayout() {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
+  const getHeaderTitle = (route: any) => {
+    const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
+    switch (routeName) {
+      case "index":
+        return "Home";
+      case "orders":
+        return "Orders";
+      case "cart":
+        return "Cart";
+      case "auth":
+        return "Login";
+    }
+  };
+
   return (
     <Stack
-      screenOptions={{ headerStyle: { backgroundColor: color.primaryBg } }}
+      screenOptions={({ route }) => ({
+        headerTitle: getHeaderTitle(route),
+        headerStyle: { backgroundColor: color.primaryBg },
+        headerTitleAlign: "center",
+      })}
     >
       <Stack.Screen
         name="(tabs)"
@@ -51,13 +70,13 @@ function RootLayout() {
             <View style={{ flexDirection: "row", gap: 20 }}>
               <AntDesign
                 name="user"
-                size={26}
+                size={24}
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
               />
               <AntDesign
                 name="shoppingcart"
-                size={26}
+                size={24}
                 color={color.secondaryText}
                 onPress={() => router.push("/cart")}
               />
@@ -75,13 +94,13 @@ function RootLayout() {
             <View style={{ flexDirection: "row", gap: 20 }}>
               <AntDesign
                 name="user"
-                size={26}
+                size={24}
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
               />
               <AntDesign
                 name="shoppingcart"
-                size={26}
+                size={24}
                 color={color.secondaryText}
                 onPress={() => router.push("/cart")}
               />
