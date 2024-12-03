@@ -44,8 +44,6 @@ function RootLayout() {
     <Stack
       screenOptions={{ headerStyle: { backgroundColor: color.primaryBg } }}
     >
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-
       <Stack.Screen
         name="(tabs)"
         options={{
@@ -56,6 +54,12 @@ function RootLayout() {
                 size={26}
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
+              />
+              <AntDesign
+                name="shoppingcart"
+                size={26}
+                color={color.secondaryText}
+                onPress={() => router.push("/cart")}
               />
             </View>
           ),
@@ -75,6 +79,12 @@ function RootLayout() {
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
               />
+              <AntDesign
+                name="shoppingcart"
+                size={26}
+                color={color.secondaryText}
+                onPress={() => router.push("/cart")}
+              />
             </View>
           ),
         }}
@@ -83,6 +93,13 @@ function RootLayout() {
         name="auth"
         options={{
           headerTitle: "Login",
+          animation: "slide_from_right",
+        }}
+      />
+      <Stack.Screen
+        name="cart"
+        options={{
+          headerTitle: "Cart",
           animation: "slide_from_right",
         }}
       />

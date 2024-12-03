@@ -11,11 +11,7 @@ export default function TabLayout(): JSX.Element {
   return (
     <Tabs
       tabBar={(props) => <CustomTabBar {...props} />}
-      screenOptions={{
-        headerTitleAlign: "center",
-        headerStyle: { backgroundColor: color.primaryBg },
-        headerTintColor: color.accent,
-      }}
+      screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />
       <Tabs.Screen name="orders" options={{ title: "Orders" }} />

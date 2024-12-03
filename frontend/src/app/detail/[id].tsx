@@ -2,15 +2,18 @@ import {
   ActivityIndicator,
   Dimensions,
   Image,
+  Pressable,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
+import { useUser } from "@clerk/clerk-expo";
 
 import Colors from "@/src/constants/Colors";
 import { useGetProduct } from "@/src/api/product";
+import { useAddToCart } from "@/src/api/cart";
 
 const { width } = Dimensions.get("window");
 
@@ -20,6 +23,8 @@ export default function Detail(): JSX.Element {
 
   const { id } = useLocalSearchParams();
   const { data: product } = useGetProduct(Number(id));
+  const { user } = useUser();
+  const { mutate: addToCart } = useAddToCart();
 
   if (!product) {
     return (
@@ -37,11 +42,27 @@ export default function Detail(): JSX.Element {
         <Text style={[styles.title, { color: color.primaryText }]}>
           {title}
         </Text>
+        <Text style={[styles.price, { color: color.accent }]}>{price}€</Text>
         <Text style={[styles.desc, { color: color.secondaryText }]}>
           {description}
         </Text>
-        <Text style={[styles.price, { color: color.accent }]}>{price}€</Text>
       </View>
+
+      <Pressable
+        style={({ pressed }) => [
+          styles.addButton,
+          { backgroundColor: pressed ? color.accent : color.invertedBg },
+        ]}
+        onPress={
+          user
+            ? () => addToCart({ id: Number(id), quantity: 1 })
+            : () => router.push("/auth")
+        }
+      >
+        <Text style={[styles.addButtonText, { color: color.invertedText }]}>
+          {user ? "Add to cart" : "login first"}
+        </Text>
+      </Pressable>
     </View>
   );
 }
@@ -77,5 +98,16 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 30,
     fontWeight: "900",
+  },
+  addButton: {
+    marginTop: 15,
+    padding: 16,
+    borderRadius: 4,
+  },
+  addButtonText: {
+    fontFamily: "QuickSandMedium",
+    fontSize: 18,
+    textAlign: "center",
+    textTransform: "uppercase",
   },
 });
