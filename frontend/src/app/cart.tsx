@@ -44,7 +44,9 @@ export default function Cart(): JSX.Element {
               <Image source={{ uri: image }} style={styles.image} />
 
               <View style={styles.titlePrice}>
-                <Text>{title}</Text>
+                <Text style={[styles.title, { color: color.secondaryText }]}>
+                  {title}
+                </Text>
                 <Text style={[styles.price, { color: color.accent }]}>
                   {price}€
                 </Text>
@@ -98,8 +100,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   empty: {
+    fontFamily: "QuickSandBold",
     fontSize: 60,
-    fontWeight: "bold",
     opacity: 0.35,
   },
   container: {
@@ -125,9 +127,13 @@ const styles = StyleSheet.create({
   titlePrice: {
     gap: 5,
   },
+  title: {
+    fontFamily: "QuickSandSemi",
+    fontSize: 18,
+  },
   price: {
-    fontSize: 16,
-    fontWeight: "700",
+    fontFamily: "QuickSandBold",
+    fontSize: 22,
   },
   quantity: {
     flexDirection: "row",
@@ -136,8 +142,8 @@ const styles = StyleSheet.create({
   },
   quantityText: {
     paddingBottom: 5,
+    fontFamily: "QuickSandSemi",
     fontSize: 20,
-    fontWeight: "900",
   },
   checkout: {
     width: "90%",
@@ -147,8 +153,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   checkoutText: {
+    fontFamily: "QuickMedium",
     fontSize: 18,
-    fontWeight: "500",
     textAlign: "center",
     textTransform: "uppercase",
   },

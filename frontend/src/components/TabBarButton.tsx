@@ -64,10 +64,8 @@ export default function TabBarButton({
 
       <Animated.Text
         style={[
-          {
-            color: isFocused ? color.accent : color.disabled,
-            fontSize: 11,
-          },
+          styles.tabBarButtonTitle,
+          { color: isFocused ? color.accent : color.disabled },
           animatedTextStyle,
         ]}
       >
@@ -82,5 +80,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     gap: 5,
+  },
+  tabBarButtonTitle: {
+    width: 50,
+    fontFamily: "QuickSandMedium",
+    textAlign: "center",
+    fontSize: 12,
   },
 });

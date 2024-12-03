@@ -88,16 +88,16 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   title: {
+    fontFamily: "QuickSandSemi",
     fontSize: 23,
-    fontWeight: "700",
-  },
-  desc: {
-    fontSize: 17,
-    fontWeight: "400",
   },
   price: {
+    fontFamily: "QuickSandBold",
     fontSize: 30,
-    fontWeight: "900",
+  },
+  desc: {
+    fontFamily: "QuickSandMedium",
+    fontSize: 17,
   },
   addButton: {
     marginTop: 15,

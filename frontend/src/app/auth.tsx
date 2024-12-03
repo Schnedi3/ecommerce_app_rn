@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   loginText: {
-    paddingTop: 4,
+    fontFamily: "QuickSandMedium",
     fontSize: 20,
   },
   userInfo: {
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   userText: {
+    fontFamily: "MulishBold",
     fontSize: 20,
   },
 });

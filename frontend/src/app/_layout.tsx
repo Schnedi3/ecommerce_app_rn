@@ -9,6 +9,7 @@ import { router, Stack } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 import Colors from "@/src/constants/Colors";
 import { tokenCache } from "@/src/lib/token";
@@ -55,12 +56,19 @@ function RootLayout() {
     }
   };
 
+  useFonts({
+    QuickSandBold: require("@/assets/fonts/Quicksand-Bold.ttf"),
+    QuickSandMedium: require("@/assets/fonts/Quicksand-Medium.ttf"),
+    QuickSandSemi: require("@/assets/fonts/Quicksand-SemiBold.ttf"),
+  });
+
   return (
     <Stack
       screenOptions={({ route }) => ({
         headerTitle: getHeaderTitle(route),
-        headerStyle: { backgroundColor: color.primaryBg },
         headerTitleAlign: "center",
+        headerTitleStyle: { fontFamily: "QuickSandBold" },
+        headerStyle: { backgroundColor: color.primaryBg },
       })}
     >
       <Stack.Screen

@@ -71,11 +71,11 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   title: {
+    fontFamily: "QuickSandSemi",
     fontSize: 14,
-    fontWeight: "400",
   },
   price: {
+    fontFamily: "QuickSandBold",
     fontSize: 20,
-    fontWeight: "700",
   },
 });

@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
+    fontFamily: "QuickSandBold",
     fontSize: 60,
-    fontWeight: "bold",
     opacity: 0.35,
   },
 });
