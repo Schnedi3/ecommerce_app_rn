@@ -9,3 +9,8 @@ export interface IProduct {
 export interface ICartItem extends IProduct {
   product_id: number;
 }
+
+export interface IAuthStore {
+  isAuthenticated: boolean;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
+}

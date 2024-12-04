@@ -13,6 +13,8 @@ import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 import Colors from "@/src/constants/Colors";
 import { googleOAuth } from "@/src/lib/oauth";
 import { useSaveUser } from "@/src/api/auth";
+import { useAuthStore } from "@/src/store/authStore";
+import { router } from "expo-router";
 
 export default function auth(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -22,12 +24,13 @@ export default function auth(): JSX.Element {
   const { user } = useUser();
   const { signOut } = useClerk();
   const { mutate: saveUser } = useSaveUser();
+  const { isAuthenticated, setIsAuthenticated } = useAuthStore();
 
-  const handleGoogleLogin = useCallback(async () => {
+  const handleLogin = useCallback(async () => {
     try {
       await googleOAuth(startOAuthFlow);
     } catch (err) {
-      console.error("OAuth error", err);
+      console.error(`OAuth error: ${err}`);
     }
   }, []);
 
@@ -38,8 +41,15 @@ export default function auth(): JSX.Element {
         name: user.firstName,
         email: user.emailAddresses[0].emailAddress,
       });
+      setIsAuthenticated(true);
     }
   }, [user]);
+
+  const handleLogout = () => {
+    signOut();
+    setIsAuthenticated(false);
+    router.replace("/");
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
@@ -61,11 +71,11 @@ export default function auth(): JSX.Element {
           { backgroundColor: color.invertedBg },
           pressed && { backgroundColor: color.accent },
         ]}
-        onPress={user ? () => signOut() : handleGoogleLogin}
+        onPress={isAuthenticated ? handleLogout : handleLogin}
       >
         <AntDesign size={28} name="google" color={color.invertedText} />
         <Text style={[styles.loginText, { color: color.invertedText }]}>
-          {user ? "Logout" : "Login with Google"}
+          {isAuthenticated ? "Logout" : "Login with Google"}
         </Text>
       </Pressable>
     </View>

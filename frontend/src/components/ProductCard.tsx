@@ -11,7 +11,8 @@ import { router } from "expo-router";
 
 import { ICartItem, IProduct } from "@/src/types/types";
 import Colors from "@/src/constants/Colors";
-import { useGetCart } from "../api/cart";
+import { useGetCart } from "@/src/api/cart";
+import { useAuthStore } from "@/src/store/authStore";
 
 const { width } = Dimensions.get("window");
 
@@ -25,6 +26,7 @@ export default function ProductCard({
 
   const { id, title, image, price } = product;
   const { data: cart } = useGetCart();
+  const { isAuthenticated } = useAuthStore();
 
   const inCart = cart.some((item: ICartItem) => item.product_id === id);
 
@@ -53,7 +55,7 @@ export default function ProductCard({
           <Text style={[styles.price, { color: color.primaryText }]}>
             {price}€
           </Text>
-          {inCart && (
+          {isAuthenticated && inCart && (
             <Text
               style={[
                 styles.inCart,

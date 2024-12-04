@@ -13,6 +13,7 @@ import { useFonts } from "expo-font";
 
 import Colors from "@/src/constants/Colors";
 import { tokenCache } from "@/src/lib/token";
+import { useAuthStore } from "@/src/store/authStore";
 
 const queryClient = new QueryClient();
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
@@ -41,6 +42,8 @@ export default function ClerkLayout(): JSX.Element {
 function RootLayout() {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
+
+  const { isAuthenticated } = useAuthStore();
 
   const getHeaderTitle = (route: any) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
@@ -74,6 +77,7 @@ function RootLayout() {
       <Stack.Screen
         name="(tabs)"
         options={{
+          headerTitleAlign: "left",
           headerRight: () => (
             <View style={{ flexDirection: "row", gap: 20 }}>
               <AntDesign
@@ -82,12 +86,14 @@ function RootLayout() {
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
               />
-              <AntDesign
-                name="shoppingcart"
-                size={24}
-                color={color.secondaryText}
-                onPress={() => router.push("/cart")}
-              />
+              {isAuthenticated && (
+                <AntDesign
+                  name="shoppingcart"
+                  size={24}
+                  color={color.secondaryText}
+                  onPress={() => router.push("/cart")}
+                />
+              )}
             </View>
           ),
         }}
@@ -106,12 +112,14 @@ function RootLayout() {
                 color={color.secondaryText}
                 onPress={() => router.push("/auth")}
               />
-              <AntDesign
-                name="shoppingcart"
-                size={24}
-                color={color.secondaryText}
-                onPress={() => router.push("/cart")}
-              />
+              {isAuthenticated && (
+                <AntDesign
+                  name="shoppingcart"
+                  size={24}
+                  color={color.secondaryText}
+                  onPress={() => router.push("/cart")}
+                />
+              )}
             </View>
           ),
         }}
