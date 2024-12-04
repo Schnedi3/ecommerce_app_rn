@@ -27,44 +27,27 @@ export default function CartItem({ item }: { item: ICartItem }) {
         <Text style={[styles.title, { color: color.secondaryText }]}>
           {title}
         </Text>
-        <Text style={[styles.price, { color: color.accent }]}>{price}€</Text>
-      </View>
-
-      <View style={styles.quantityContainer}>
-        <Pressable onPress={() => deleteFromCart(product_id)}>
-          {({ pressed }) => (
-            <Ionicons
-              name="trash-outline"
-              size={24}
-              color={pressed ? color.accent : color.secondaryText}
-            />
-          )}
-        </Pressable>
-
-        <View style={styles.quantity}>
-          <Pressable>
-            {({ pressed }) => (
-              <Ionicons
-                name="remove-circle-outline"
-                size={26}
-                color={pressed ? color.accent : color.secondaryText}
-              />
-            )}
-          </Pressable>
+        <View style={styles.priceQuantity}>
+          <Text style={[styles.price, { color: color.accent }]}>{price}€</Text>
+          <Text style={[styles.ex, { color: color.secondaryText }]}>x</Text>
           <Text style={[styles.quantityText, { color: color.secondaryText }]}>
             {quantity}
           </Text>
-          <Pressable>
-            {({ pressed }) => (
-              <Ionicons
-                name="add-circle-outline"
-                size={26}
-                color={pressed ? color.accent : color.secondaryText}
-              />
-            )}
-          </Pressable>
         </View>
       </View>
+
+      <Pressable
+        style={styles.deleteButton}
+        onPress={() => deleteFromCart(product_id)}
+      >
+        {({ pressed }) => (
+          <Ionicons
+            name="trash-outline"
+            size={24}
+            color={pressed ? color.accent : color.secondaryText}
+          />
+        )}
+      </Pressable>
     </View>
   );
 }
@@ -76,7 +59,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     flexDirection: "row",
     alignItems: "center",
-    gap: 20,
+    gap: 40,
     borderBottomWidth: 1,
   },
   image: {
@@ -91,23 +74,24 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandSemi",
     fontSize: 18,
   },
+  priceQuantity: {
+    flexDirection: "row",
+    gap: 15,
+  },
   price: {
     fontFamily: "QuickSandBold",
     fontSize: 22,
   },
-  quantityContainer: {
-    gap: 6,
-    alignItems: "flex-end",
-    marginLeft: "auto",
-  },
-  quantity: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
+  ex: {
+    fontFamily: "QuickSandSemi",
+    fontSize: 20,
   },
   quantityText: {
     paddingBottom: 5,
     fontFamily: "QuickSandSemi",
-    fontSize: 24,
+    fontSize: 20,
+  },
+  deleteButton: {
+    marginLeft: "auto",
   },
 });

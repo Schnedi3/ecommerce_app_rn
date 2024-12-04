@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
@@ -9,7 +10,7 @@ import {
   View,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
-import { useUser } from "@clerk/clerk-expo";
+import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "@/src/constants/Colors";
 import { useGetProduct } from "@/src/api/product";
@@ -20,12 +21,13 @@ import { useAuthStore } from "@/src/store/authStore";
 const { width } = Dimensions.get("window");
 
 export default function Detail(): JSX.Element {
+  const [quantity, setQuantity] = useState<number>(1);
+
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
   const { id } = useLocalSearchParams();
   const { data: product } = useGetProduct(Number(id));
-  const { user } = useUser();
   const { data: cart } = useGetCart();
   const { mutate: addToCart } = useAddToCart();
   const { isAuthenticated } = useAuthStore();
@@ -52,6 +54,38 @@ export default function Detail(): JSX.Element {
         <Text style={[styles.desc, { color: color.secondaryText }]}>
           {description}
         </Text>
+      </View>
+
+      <View style={styles.quantity}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.quantityButton,
+            { borderColor: pressed ? color.accent : color.secondaryText },
+          ]}
+        >
+          <Ionicons
+            style={{ textAlign: "center" }}
+            name="remove-outline"
+            size={26}
+            color={color.secondaryText}
+          />
+        </Pressable>
+        <Text style={[styles.quantityText, { color: color.secondaryText }]}>
+          {quantity}
+        </Text>
+        <Pressable
+          style={({ pressed }) => [
+            styles.quantityButton,
+            { borderColor: pressed ? color.accent : color.secondaryText },
+          ]}
+        >
+          <Ionicons
+            style={{ textAlign: "center" }}
+            name="add-outline"
+            size={26}
+            color={color.secondaryText}
+          />
+        </Pressable>
       </View>
 
       <Pressable
@@ -115,8 +149,23 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandMedium",
     fontSize: 17,
   },
+  quantity: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  quantityButton: {
+    width: "30%",
+    paddingVertical: 14,
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  quantityText: {
+    paddingBottom: 5,
+    fontFamily: "QuickSandSemi",
+    fontSize: 35,
+  },
   addButton: {
-    marginTop: 15,
     padding: 16,
     borderRadius: 4,
   },
