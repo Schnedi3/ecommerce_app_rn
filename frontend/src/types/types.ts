@@ -8,6 +8,7 @@ export interface IProduct {
 
 export interface ICartItem extends IProduct {
   product_id: number;
+  quantity: number;
 }
 
 export interface IAuthStore {

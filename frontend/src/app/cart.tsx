@@ -1,22 +1,21 @@
 import {
   FlatList,
-  Image,
   Pressable,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "@/src/constants/Colors";
-import { useDeleteFromCart, useGetCart } from "@/src/api/cart";
+import { useGetCart } from "@/src/api/cart";
+import CartItem from "@/src/components/CartItem";
 
 export default function Cart(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
+
   const { data: cart } = useGetCart();
-  const { mutate: deleteFromCart } = useDeleteFromCart();
 
   if (!cart || cart.length === 0) {
     return (
@@ -35,61 +34,7 @@ export default function Cart(): JSX.Element {
           style={{ backgroundColor: color.secondaryBg }}
           contentContainerStyle={styles.contentContainer}
           data={cart}
-          renderItem={({
-            item: { title, image, price, quantity, product_id },
-          }) => (
-            <View
-              style={[
-                styles.itemContainer,
-                { borderBottomColor: color.border },
-              ]}
-            >
-              <Image source={{ uri: image }} style={styles.image} />
-
-              <View style={styles.titlePrice}>
-                <Text style={[styles.title, { color: color.secondaryText }]}>
-                  {title}
-                </Text>
-                <Text style={[styles.price, { color: color.accent }]}>
-                  {price}€
-                </Text>
-              </View>
-
-              <View style={styles.quantityContainer}>
-                <AntDesign
-                  name="delete"
-                  size={24}
-                  color={color.accent}
-                  onPress={() => deleteFromCart(product_id)}
-                />
-
-                <View style={styles.quantity}>
-                  <Pressable>
-                    <AntDesign
-                      name="minuscircleo"
-                      size={20}
-                      color={color.secondaryText}
-                    />
-                  </Pressable>
-                  <Text
-                    style={[
-                      styles.quantityText,
-                      { color: color.secondaryText },
-                    ]}
-                  >
-                    {quantity}
-                  </Text>
-                  <Pressable>
-                    <AntDesign
-                      name="pluscircleo"
-                      size={20}
-                      color={color.secondaryText}
-                    />
-                  </Pressable>
-                </View>
-              </View>
-            </View>
-          )}
+          renderItem={({ item }) => <CartItem item={item} />}
           keyExtractor={(item) => item.product_id}
         />
 
@@ -125,45 +70,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 15,
   },
-  itemContainer: {
-    width: "90%",
-    marginHorizontal: "auto",
-    paddingVertical: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    borderBottomWidth: 1,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    borderRadius: 4,
-  },
-  titlePrice: {
-    gap: 5,
-  },
-  title: {
-    fontFamily: "QuickSandSemi",
-    fontSize: 18,
-  },
-  price: {
-    fontFamily: "QuickSandBold",
-    fontSize: 22,
-  },
-  quantityContainer: {
-    gap: 10,
-    alignItems: "center",
-  },
-  quantity: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 20,
-  },
-  quantityText: {
-    paddingBottom: 5,
-    fontFamily: "QuickSandSemi",
-    fontSize: 20,
-  },
   checkout: {
     width: "90%",
     marginHorizontal: "auto",
@@ -172,7 +78,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   checkoutText: {
-    fontFamily: "QuickMedium",
+    fontFamily: "QuickSandMedium",
     fontSize: 18,
     textAlign: "center",
     textTransform: "uppercase",
