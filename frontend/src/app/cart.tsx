@@ -10,12 +10,13 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 import Colors from "@/src/constants/Colors";
-import { useGetCart } from "@/src/api/cart";
+import { useDeleteFromCart, useGetCart } from "@/src/api/cart";
 
 export default function Cart(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
   const { data: cart } = useGetCart();
+  const { mutate: deleteFromCart } = useDeleteFromCart();
 
   if (!cart || cart.length === 0) {
     return (
@@ -34,7 +35,9 @@ export default function Cart(): JSX.Element {
           style={{ backgroundColor: color.secondaryBg }}
           contentContainerStyle={styles.contentContainer}
           data={cart}
-          renderItem={({ item: { title, image, price, quantity } }) => (
+          renderItem={({
+            item: { title, image, price, quantity, product_id },
+          }) => (
             <View
               style={[
                 styles.itemContainer,
@@ -52,26 +55,38 @@ export default function Cart(): JSX.Element {
                 </Text>
               </View>
 
-              <View style={styles.quantity}>
-                <Pressable>
-                  <AntDesign
-                    name="minuscircleo"
-                    size={20}
-                    color={color.secondaryText}
-                  />
-                </Pressable>
-                <Text
-                  style={[styles.quantityText, { color: color.secondaryText }]}
-                >
-                  {quantity}
-                </Text>
-                <Pressable>
-                  <AntDesign
-                    name="pluscircleo"
-                    size={20}
-                    color={color.secondaryText}
-                  />
-                </Pressable>
+              <View style={styles.quantityContainer}>
+                <AntDesign
+                  name="delete"
+                  size={24}
+                  color={color.accent}
+                  onPress={() => deleteFromCart(product_id)}
+                />
+
+                <View style={styles.quantity}>
+                  <Pressable>
+                    <AntDesign
+                      name="minuscircleo"
+                      size={20}
+                      color={color.secondaryText}
+                    />
+                  </Pressable>
+                  <Text
+                    style={[
+                      styles.quantityText,
+                      { color: color.secondaryText },
+                    ]}
+                  >
+                    {quantity}
+                  </Text>
+                  <Pressable>
+                    <AntDesign
+                      name="pluscircleo"
+                      size={20}
+                      color={color.secondaryText}
+                    />
+                  </Pressable>
+                </View>
               </View>
             </View>
           )}
@@ -134,6 +149,10 @@ const styles = StyleSheet.create({
   price: {
     fontFamily: "QuickSandBold",
     fontSize: 22,
+  },
+  quantityContainer: {
+    gap: 10,
+    alignItems: "center",
   },
   quantity: {
     flexDirection: "row",
