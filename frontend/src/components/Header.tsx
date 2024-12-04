@@ -4,7 +4,8 @@ import { router } from "expo-router";
 
 import Colors from "@/src/constants/Colors";
 import { useAuthStore } from "@/src/store/authStore";
-import { useGetCart } from "../api/cart";
+import { useGetCart } from "@/src/api/cart";
+import { ICartItem } from "@/src/types/types";
 
 export default function Header() {
   const colorTheme = useColorScheme();
@@ -14,7 +15,7 @@ export default function Header() {
   const { data: cart } = useGetCart();
 
   const itemsInCart = cart?.reduce(
-    (acc: number, item: { quantity: number }) => acc + item.quantity,
+    (acc: number, item: ICartItem) => acc + item.quantity,
     0
   );
 
@@ -34,11 +35,13 @@ export default function Header() {
             color={color.secondaryText}
             onPress={() => router.push("/cart")}
           />
-          <View style={[styles.badge, { backgroundColor: color.accent }]}>
-            <Text style={[styles.badgeText, { color: color.invertedText }]}>
-              {itemsInCart}
-            </Text>
-          </View>
+          {cart.length > 0 && (
+            <View style={[styles.badge, { backgroundColor: color.accent }]}>
+              <Text style={[styles.badgeText, { color: color.invertedText }]}>
+                {itemsInCart}
+              </Text>
+            </View>
+          )}
         </View>
       )}
     </View>

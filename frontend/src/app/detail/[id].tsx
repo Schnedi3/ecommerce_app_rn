@@ -33,6 +33,16 @@ export default function Detail(): JSX.Element {
   const { isAuthenticated } = useAuthStore();
 
   const inCart = cart.some((item: ICartItem) => item.product_id === Number(id));
+  const foundProduct = cart.find(
+    (item: ICartItem) => item.product_id === Number(id)
+  );
+
+  const decreaseCartQuantity = () => {
+    setQuantity((prevQuantity: number) => prevQuantity - 1);
+  };
+  const increaseCartQuantity = () => {
+    setQuantity((prevQuantity: number) => prevQuantity + 1);
+  };
 
   if (!product) {
     return (
@@ -62,6 +72,8 @@ export default function Detail(): JSX.Element {
             styles.quantityButton,
             { borderColor: pressed ? color.accent : color.secondaryText },
           ]}
+          onPress={decreaseCartQuantity}
+          disabled={quantity === 1}
         >
           <Ionicons
             style={{ textAlign: "center" }}
@@ -71,13 +83,14 @@ export default function Detail(): JSX.Element {
           />
         </Pressable>
         <Text style={[styles.quantityText, { color: color.secondaryText }]}>
-          {quantity}
+          {inCart ? foundProduct.quantity : quantity}
         </Text>
         <Pressable
           style={({ pressed }) => [
             styles.quantityButton,
             { borderColor: pressed ? color.accent : color.secondaryText },
           ]}
+          onPress={increaseCartQuantity}
         >
           <Ionicons
             style={{ textAlign: "center" }}
@@ -100,7 +113,7 @@ export default function Detail(): JSX.Element {
         ]}
         onPress={
           isAuthenticated
-            ? () => addToCart({ id: Number(id), quantity: 1 })
+            ? () => addToCart({ id: Number(id), quantity })
             : () => router.push("/auth")
         }
         disabled={isAuthenticated && inCart}
