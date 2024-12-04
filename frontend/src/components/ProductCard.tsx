@@ -97,8 +97,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   inCart: {
-    paddingHorizontal: 10,
-    paddingVertical: 2,
+    paddingHorizontal: 8,
+    paddingVertical: 1,
+    fontFamily: "QuickSandBold",
     fontSize: 10,
     borderRadius: 10,
     textTransform: "uppercase",

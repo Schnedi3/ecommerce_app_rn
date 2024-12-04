@@ -1,19 +1,19 @@
-import { StatusBar, useColorScheme, View } from "react-native";
+import { StatusBar, useColorScheme } from "react-native";
 import {
   DarkTheme,
   DefaultTheme,
   getFocusedRouteNameFromRoute,
   ThemeProvider,
 } from "@react-navigation/native";
-import { router, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
-import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 
 import Colors from "@/src/constants/Colors";
 import { tokenCache } from "@/src/lib/token";
 import { useAuthStore } from "@/src/store/authStore";
+import Header from "@/src/components/Header";
 
 const queryClient = new QueryClient();
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
@@ -78,24 +78,7 @@ function RootLayout() {
         name="(tabs)"
         options={{
           headerTitleAlign: "left",
-          headerRight: () => (
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <AntDesign
-                name="user"
-                size={24}
-                color={color.secondaryText}
-                onPress={() => router.push("/auth")}
-              />
-              {isAuthenticated && (
-                <AntDesign
-                  name="shoppingcart"
-                  size={24}
-                  color={color.secondaryText}
-                  onPress={() => router.push("/cart")}
-                />
-              )}
-            </View>
-          ),
+          headerRight: () => <Header />,
         }}
       />
 
@@ -104,24 +87,7 @@ function RootLayout() {
         options={{
           headerTitle: "Details",
           animation: "slide_from_right",
-          headerRight: () => (
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <AntDesign
-                name="user"
-                size={24}
-                color={color.secondaryText}
-                onPress={() => router.push("/auth")}
-              />
-              {isAuthenticated && (
-                <AntDesign
-                  name="shoppingcart"
-                  size={24}
-                  color={color.secondaryText}
-                  onPress={() => router.push("/cart")}
-                />
-              )}
-            </View>
-          ),
+          headerRight: () => <Header />,
         }}
       />
       <Stack.Screen
