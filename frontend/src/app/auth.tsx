@@ -11,7 +11,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 
 import Colors from "@/src/constants/Colors";
-import { googleOAuth } from "@/src/lib/token";
+import { googleOAuth } from "@/src/lib/oauth";
 import { useSaveUser } from "@/src/api/auth";
 
 export default function auth(): JSX.Element {
