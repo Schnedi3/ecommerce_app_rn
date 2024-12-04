@@ -9,8 +9,9 @@ import {
 } from "react-native";
 import { router } from "expo-router";
 
-import { IProduct } from "@/src/types/types";
+import { ICartItem, IProduct } from "@/src/types/types";
 import Colors from "@/src/constants/Colors";
+import { useGetCart } from "../api/cart";
 
 const { width } = Dimensions.get("window");
 
@@ -23,6 +24,9 @@ export default function ProductCard({
   const color = Colors[colorTheme ?? "light"];
 
   const { id, title, image, price } = product;
+  const { data: cart } = useGetCart();
+
+  const inCart = cart.some((item: ICartItem) => item.product_id === id);
 
   return (
     <Pressable
@@ -40,13 +44,26 @@ export default function ProductCard({
       }
     >
       <Image source={{ uri: image }} style={styles.image} />
-      <View style={styles.info}>
+      <View>
         <Text style={[styles.title, { color: color.secondaryText }]}>
           {title}
         </Text>
-        <Text style={[styles.price, { color: color.primaryText }]}>
-          {price}€
-        </Text>
+
+        <View style={styles.priceContainer}>
+          <Text style={[styles.price, { color: color.primaryText }]}>
+            {price}€
+          </Text>
+          {inCart && (
+            <Text
+              style={[
+                styles.inCart,
+                { backgroundColor: color.accent, color: color.invertedText },
+              ]}
+            >
+              in cart
+            </Text>
+          )}
+        </View>
       </View>
     </Pressable>
   );
@@ -67,12 +84,22 @@ const styles = StyleSheet.create({
     height: "80%",
     borderRadius: 10,
   },
-  info: {
-    marginTop: 0,
-  },
   title: {
     fontFamily: "QuickSandSemi",
     fontSize: 14,
+  },
+  priceContainer: {
+    width: "99%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  inCart: {
+    paddingHorizontal: 10,
+    paddingVertical: 2,
+    fontSize: 10,
+    borderRadius: 10,
+    textTransform: "uppercase",
   },
   price: {
     fontFamily: "QuickSandBold",

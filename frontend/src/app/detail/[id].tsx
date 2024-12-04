@@ -13,7 +13,8 @@ import { useUser } from "@clerk/clerk-expo";
 
 import Colors from "@/src/constants/Colors";
 import { useGetProduct } from "@/src/api/product";
-import { useAddToCart } from "@/src/api/cart";
+import { useAddToCart, useGetCart } from "@/src/api/cart";
+import { ICartItem } from "@/src/types/types";
 
 const { width } = Dimensions.get("window");
 
@@ -24,7 +25,10 @@ export default function Detail(): JSX.Element {
   const { id } = useLocalSearchParams();
   const { data: product } = useGetProduct(Number(id));
   const { user } = useUser();
+  const { data: cart } = useGetCart();
   const { mutate: addToCart } = useAddToCart();
+
+  const inCart = cart.some((item: ICartItem) => item.product_id === Number(id));
 
   if (!product) {
     return (
@@ -51,16 +55,20 @@ export default function Detail(): JSX.Element {
       <Pressable
         style={({ pressed }) => [
           styles.addButton,
-          { backgroundColor: pressed ? color.accent : color.invertedBg },
+          {
+            backgroundColor:
+              inCart || pressed ? color.accent : color.invertedBg,
+          },
         ]}
         onPress={
           user
             ? () => addToCart({ id: Number(id), quantity: 1 })
             : () => router.push("/auth")
         }
+        disabled={inCart}
       >
         <Text style={[styles.addButtonText, { color: color.invertedText }]}>
-          {user ? "Add to cart" : "login first"}
+          {!user ? "login first" : inCart ? "Already in cart" : "Add to cart"}
         </Text>
       </Pressable>
     </View>
