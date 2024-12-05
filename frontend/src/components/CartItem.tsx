@@ -36,30 +36,34 @@ export default function CartItem({ item }: { item: ICartItem }) {
         </View>
       </View>
 
-      <Pressable
-        style={styles.deleteButton}
-        onPress={() => deleteFromCart(product_id)}
-      >
-        {({ pressed }) => (
-          <Ionicons
-            name="trash-outline"
-            size={24}
-            color={pressed ? color.accent : color.secondaryText}
-          />
-        )}
-      </Pressable>
+      <View style={styles.deleteTotal}>
+        <Pressable
+          style={{ alignSelf: "flex-end" }}
+          onPress={() => deleteFromCart(product_id)}
+        >
+          {({ pressed }) => (
+            <Ionicons
+              name="trash-outline"
+              size={24}
+              color={pressed ? color.accent : color.secondaryText}
+            />
+          )}
+        </Pressable>
+        <Text style={[styles.total, { color: color.secondaryText }]}>
+          {price * quantity}€
+        </Text>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
-    width: "90%",
-    marginHorizontal: "auto",
+    marginHorizontal: "5%",
     paddingVertical: 15,
     flexDirection: "row",
     alignItems: "center",
-    gap: 40,
+    gap: 25,
     borderBottomWidth: 1,
   },
   image: {
@@ -68,11 +72,11 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   titlePrice: {
-    gap: 5,
+    gap: 0,
   },
   title: {
     fontFamily: "QuickSandSemi",
-    fontSize: 18,
+    fontSize: 16,
   },
   priceQuantity: {
     flexDirection: "row",
@@ -80,7 +84,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontFamily: "QuickSandBold",
-    fontSize: 22,
+    fontSize: 20,
   },
   ex: {
     fontFamily: "QuickSandSemi",
@@ -91,7 +95,12 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandSemi",
     fontSize: 20,
   },
-  deleteButton: {
+  deleteTotal: {
     marginLeft: "auto",
+    gap: 5,
+  },
+  total: {
+    fontFamily: "QuickSandMedium",
+    fontSize: 17,
   },
 });

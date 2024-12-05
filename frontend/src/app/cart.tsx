@@ -10,12 +10,18 @@ import {
 import Colors from "@/src/constants/Colors";
 import { useGetCart } from "@/src/api/cart";
 import CartItem from "@/src/components/CartItem";
+import { ICartItem } from "@/src/types/types";
 
 export default function Cart(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
   const { data: cart } = useGetCart();
+
+  const totalCart = cart.reduce(
+    (acc: number, item: ICartItem) => acc + item.price * item.quantity,
+    0
+  );
 
   if (!cart || cart.length === 0) {
     return (
@@ -37,6 +43,15 @@ export default function Cart(): JSX.Element {
           renderItem={({ item }) => <CartItem item={item} />}
           keyExtractor={(item) => item.product_id}
         />
+
+        <View style={styles.totalContainer}>
+          <Text style={[styles.totalText, { color: color.primaryText }]}>
+            Total
+          </Text>
+          <Text style={[styles.total, { color: color.accent }]}>
+            {totalCart}€
+          </Text>
+        </View>
 
         <Pressable
           style={({ pressed }) => [
@@ -70,10 +85,23 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingVertical: 15,
   },
+  totalContainer: {
+    marginHorizontal: "5%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  totalText: {
+    fontFamily: "QuickSandMedium",
+    fontSize: 20,
+  },
+  total: {
+    fontFamily: "QuickSandBold",
+    fontSize: 28,
+  },
   checkout: {
-    width: "90%",
-    marginHorizontal: "auto",
-    marginTop: 15,
+    marginHorizontal: "5%",
+    marginTop: 25,
     padding: 16,
     borderRadius: 4,
   },
