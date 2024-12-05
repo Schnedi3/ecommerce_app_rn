@@ -67,31 +67,18 @@ function RootLayout() {
         headerTitleAlign: "center",
         headerTitleStyle: { fontFamily: "QuickSandBold" },
         headerStyle: { backgroundColor: color.primaryBg },
+        animation: "slide_from_right",
       })}
     >
       <Stack.Screen
         name="(tabs)"
-        options={{
-          headerTitleAlign: "left",
-          headerRight: () => <Header />,
-        }}
+        options={{ headerTitleAlign: "left", headerRight: () => <Header /> }}
       />
-
       <Stack.Screen
         name="detail/[id]"
-        options={{
-          headerTitle: "Details",
-          animation: "slide_from_right",
-          headerRight: () => <Header />,
-        }}
+        options={{ headerTitle: "Details", headerRight: () => <Header /> }}
       />
-      <Stack.Screen
-        name="cart"
-        options={{
-          headerTitle: "Cart",
-          animation: "slide_from_right",
-        }}
-      />
+      <Stack.Screen name="cart" options={{ headerTitle: "Cart" }} />
     </Stack>
   );
 }

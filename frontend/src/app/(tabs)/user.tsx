@@ -7,14 +7,15 @@ import {
   useColorScheme,
   View,
 } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
+import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 import Colors from "@/src/constants/Colors";
 import { googleOAuth } from "@/src/lib/oauth";
 import { useSaveUser } from "@/src/api/auth";
 import { useAuthStore } from "@/src/store/authStore";
-import { router } from "expo-router";
 
 export default function user(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -53,31 +54,72 @@ export default function user(): JSX.Element {
 
   return (
     <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-      {user && (
-        <View style={styles.userInfo}>
-          <Image source={{ uri: user.imageUrl }} style={styles.avatar} />
-          <Text style={[styles.userText, { color: color.primaryText }]}>
-            {user.firstName}
-          </Text>
-          <Text style={[styles.userText, { color: color.primaryText }]}>
-            {user.emailAddresses[0].emailAddress}
-          </Text>
-        </View>
-      )}
+      <LinearGradient colors={["#c54497", "#403999"]} style={styles.header}>
+        {user && (
+          <Image source={{ uri: user.imageUrl }} style={styles.bigAvatar} />
+        )}
+      </LinearGradient>
 
-      <Pressable
-        style={({ pressed }) => [
-          styles.loginButton,
-          { backgroundColor: color.invertedBg },
-          pressed && { backgroundColor: color.accent },
-        ]}
-        onPress={isAuthenticated ? handleLogout : handleLogin}
-      >
-        <AntDesign size={28} name="google" color={color.invertedText} />
-        <Text style={[styles.loginText, { color: color.invertedText }]}>
-          {isAuthenticated ? "Logout" : "Login with Google"}
+      <View style={styles.userInfo}>
+        <Image
+          source={
+            user
+              ? { uri: user.imageUrl }
+              : require("@/assets/images/avatar.jpg")
+          }
+          style={[styles.avatar, { borderColor: color.primaryBg }]}
+        />
+        <Text style={[styles.userName, { color: color.primaryText }]}>
+          {user ? user.firstName : "Guest"}
         </Text>
-      </Pressable>
+        <Text
+          style={[
+            styles.userEmail,
+            { color: color.primaryText, backgroundColor: color.primaryBg },
+          ]}
+        >
+          {user ? user.emailAddresses[0].emailAddress : "guest@guest.com"}
+        </Text>
+      </View>
+
+      <View style={styles.buttonsContainer}>
+        {isAuthenticated && (
+          <Pressable
+            style={({ pressed }) => [
+              styles.loginButton,
+              pressed && { backgroundColor: color.primaryBg },
+              { borderColor: color.border },
+            ]}
+            onPress={() => router.push("/orders")}
+          >
+            <Ionicons
+              size={26}
+              name="archive-outline"
+              color={color.secondaryText}
+            />
+            <Text style={[styles.loginText, { color: color.secondaryText }]}>
+              Orders
+            </Text>
+          </Pressable>
+        )}
+        <Pressable
+          style={({ pressed }) => [
+            styles.loginButton,
+            pressed && { backgroundColor: color.primaryBg },
+            { borderColor: color.border },
+          ]}
+          onPress={isAuthenticated ? handleLogout : handleLogin}
+        >
+          <AntDesign
+            size={24}
+            name={isAuthenticated ? "logout" : "google"}
+            color={color.secondaryText}
+          />
+          <Text style={[styles.loginText, { color: color.secondaryText }]}>
+            {isAuthenticated ? "Logout" : "Login with Google"}
+          </Text>
+        </Pressable>
+      </View>
     </View>
   );
 }
@@ -85,33 +127,55 @@ export default function user(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  header: {
+    position: "absolute",
+    width: "100%",
+    height: 300,
+    opacity: 0.75,
+  },
+  bigAvatar: {
+    width: "100%",
+    height: 300,
+    zIndex: -1,
+  },
+  userInfo: {
+    top: 170,
     alignItems: "center",
-    justifyContent: "center",
+    gap: 5,
+  },
+  avatar: {
+    width: 150,
+    height: 150,
+    borderWidth: 5,
+    borderRadius: 100,
+  },
+  userName: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
+  userEmail: {
+    paddingHorizontal: 20,
+    paddingTop: 3,
+    paddingBottom: 6,
+    fontFamily: "QuickSandMedium",
+    fontSize: 16,
+    borderRadius: 20,
+    elevation: 3,
+  },
+  buttonsContainer: {
+    top: 250,
   },
   loginButton: {
-    paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingHorizontal: 80,
+    paddingVertical: 20,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    gap: 15,
-    borderRadius: 4,
+    gap: 40,
+    borderBottomWidth: 1,
   },
   loginText: {
     fontFamily: "QuickSandMedium",
-    fontSize: 20,
-  },
-  userInfo: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-  },
-  userText: {
-    fontFamily: "MulishBold",
     fontSize: 20,
   },
 });
