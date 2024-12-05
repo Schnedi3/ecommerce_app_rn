@@ -12,3 +12,6 @@ export const PG_USER = process.env.PG_USER;
 
 export const CLERK_PUBLISHABLE_KEY = process.env.CLERK_PUBLISHABLE_KEY;
 export const CLERK_SECRET_KEY = process.env.CLERK_SECRET_KEY;
+
+export const STRIPE_PUBLISHABLE_KEY = process.env.STRIPE_PUBLISHABLE_KEY;
+export const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY;
