@@ -16,7 +16,7 @@ import { useSaveUser } from "@/src/api/auth";
 import { useAuthStore } from "@/src/store/authStore";
 import { router } from "expo-router";
 
-export default function auth(): JSX.Element {
+export default function user(): JSX.Element {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 

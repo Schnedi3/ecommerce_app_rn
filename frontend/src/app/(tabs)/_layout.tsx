@@ -14,7 +14,7 @@ export default function TabLayout(): JSX.Element {
       screenOptions={{ headerShown: false }}
     >
       <Tabs.Screen name="index" options={{ title: "Home" }} />
-      <Tabs.Screen name="orders" options={{ title: "Orders" }} />
+      <Tabs.Screen name="user" options={{ title: "User" }} />
     </Tabs>
   );
 }

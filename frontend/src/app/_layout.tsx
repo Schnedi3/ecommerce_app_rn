@@ -12,7 +12,6 @@ import { useFonts } from "expo-font";
 
 import Colors from "@/src/constants/Colors";
 import { tokenCache } from "@/src/lib/token";
-import { useAuthStore } from "@/src/store/authStore";
 import Header from "@/src/components/Header";
 
 const queryClient = new QueryClient();
@@ -43,19 +42,15 @@ function RootLayout() {
   const colorTheme = useColorScheme();
   const color = Colors[colorTheme ?? "light"];
 
-  const { isAuthenticated } = useAuthStore();
-
   const getHeaderTitle = (route: any) => {
     const routeName = getFocusedRouteNameFromRoute(route) ?? "Home";
     switch (routeName) {
       case "index":
         return "Home";
-      case "orders":
-        return "Orders";
+      case "user":
+        return "User";
       case "cart":
         return "Cart";
-      case "auth":
-        return "Login";
     }
   };
 
@@ -88,13 +83,6 @@ function RootLayout() {
           headerTitle: "Details",
           animation: "slide_from_right",
           headerRight: () => <Header />,
-        }}
-      />
-      <Stack.Screen
-        name="auth"
-        options={{
-          headerTitle: "Login",
-          animation: "slide_from_right",
         }}
       />
       <Stack.Screen

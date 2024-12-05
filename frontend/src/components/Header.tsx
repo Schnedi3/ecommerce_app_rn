@@ -20,13 +20,7 @@ export default function Header() {
   );
 
   return (
-    <View style={{ flexDirection: "row", gap: 20 }}>
-      <AntDesign
-        name="user"
-        size={24}
-        color={color.secondaryText}
-        onPress={() => router.push("/auth")}
-      />
+    <View style={{ paddingHorizontal: 5 }}>
       {isAuthenticated && (
         <View>
           <AntDesign
