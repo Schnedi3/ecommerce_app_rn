@@ -1,16 +1,13 @@
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 import Colors from "@/src/constants/Colors";
 import { useGetCart } from "@/src/api/cart";
 import CartItem from "@/src/components/CartItem";
 import { ICartItem } from "@/src/types/types";
+import Payment from "@/src/components/Payment";
+
+const publishableKey = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 
 export default function Cart(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -34,37 +31,34 @@ export default function Cart(): JSX.Element {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-      <View>
-        <FlatList
-          style={{ backgroundColor: color.secondaryBg }}
-          contentContainerStyle={styles.contentContainer}
-          data={cart}
-          renderItem={({ item }) => <CartItem item={item} />}
-          keyExtractor={(item) => item.product_id}
-        />
+    <StripeProvider
+      publishableKey={publishableKey}
+      merchantIdentifier="merchant.ecommerce.com"
+      urlScheme="myapp"
+    >
+      <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
+        <View>
+          <FlatList
+            style={{ backgroundColor: color.secondaryBg }}
+            contentContainerStyle={styles.contentContainer}
+            data={cart}
+            renderItem={({ item }) => <CartItem item={item} />}
+            keyExtractor={(item) => item.product_id}
+          />
 
-        <View style={styles.totalContainer}>
-          <Text style={[styles.totalText, { color: color.primaryText }]}>
-            Total
-          </Text>
-          <Text style={[styles.total, { color: color.accent }]}>
-            {totalCart}€
-          </Text>
+          <View style={styles.totalContainer}>
+            <Text style={[styles.totalText, { color: color.primaryText }]}>
+              Total
+            </Text>
+            <Text style={[styles.total, { color: color.accent }]}>
+              {totalCart}€
+            </Text>
+          </View>
+
+          <Payment totalCart={totalCart} />
         </View>
-
-        <Pressable
-          style={({ pressed }) => [
-            styles.checkout,
-            { backgroundColor: pressed ? color.accent : color.invertedBg },
-          ]}
-        >
-          <Text style={[styles.checkoutText, { color: color.invertedText }]}>
-            Checkout
-          </Text>
-        </Pressable>
       </View>
-    </View>
+    </StripeProvider>
   );
 }
 
@@ -98,17 +92,5 @@ const styles = StyleSheet.create({
   total: {
     fontFamily: "QuickSandBold",
     fontSize: 28,
-  },
-  checkout: {
-    marginHorizontal: "5%",
-    marginTop: 25,
-    padding: 16,
-    borderRadius: 4,
-  },
-  checkoutText: {
-    fontFamily: "QuickSandMedium",
-    fontSize: 18,
-    textAlign: "center",
-    textTransform: "uppercase",
   },
 });
