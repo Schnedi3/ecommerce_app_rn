@@ -114,7 +114,7 @@ export default function Detail(): JSX.Element {
         onPress={
           isAuthenticated
             ? () => addToCart({ id: Number(id), quantity })
-            : () => router.push("/auth")
+            : () => router.push("/user")
         }
         disabled={isAuthenticated && inCart}
       >

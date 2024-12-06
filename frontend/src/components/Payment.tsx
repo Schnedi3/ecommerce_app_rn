@@ -11,6 +11,7 @@ import { useUser } from "@clerk/clerk-expo";
 
 import Colors from "@/src/constants/Colors";
 import { usePayment } from "@/src/api/payment";
+import { useAddOrder } from "@/src/api/order";
 
 export default function Payment({
   totalCart,
@@ -25,6 +26,7 @@ export default function Payment({
 
   const { mutate: paymentSheet } = usePayment();
   const { user } = useUser();
+  const { mutate: addOrder } = useAddOrder();
 
   const initializePaymentSheet = async (): Promise<void> => {
     paymentSheet(totalCart, {
@@ -49,9 +51,9 @@ export default function Payment({
 
     if (error) {
       Alert.alert(`${error.code}`, error.message);
-    } else {
-      Alert.alert("Success", "Your order is confirmed!");
     }
+    Alert.alert("Success", "Your order is confirmed!");
+    addOrder(totalCart);
   };
 
   useEffect(() => {
