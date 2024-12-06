@@ -7,6 +7,7 @@ import productRoutes from "./routes/productRoute";
 import authRoutes from "./routes/authRoute";
 import cartRoutes from "./routes/cartRoute";
 import paymentRoutes from "./routes/paymentRoute";
+import orderRoutes from "./routes/orderRoute";
 
 export const app = express();
 
@@ -23,6 +24,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/stripe", paymentRoutes);
+app.use("/api/order", orderRoutes);
 
 app.listen(PORT);
 console.log("Server running on port", PORT);
