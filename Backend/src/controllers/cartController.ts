@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 
 import {
   addToCartDB,
-  createCartDB,
+  findCartDB,
   getCartDB,
   deleteFromCartDB,
 } from "../database/cartDB";
@@ -16,7 +16,7 @@ export const getCart = async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const cartId = await createCartDB(userId);
+    const cartId = await findCartDB(userId);
     const result = await getCartDB(cartId);
 
     res.status(200).json(result);
@@ -36,7 +36,7 @@ export const addToCart = async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const cartId = await createCartDB(userId);
+    const cartId = await findCartDB(userId);
     await addToCartDB(cartId, productId, quantity);
 
     res.status(200).json({ message: "Product added to cart" });
@@ -58,7 +58,7 @@ export const deleteFromCart = async (
   }
 
   try {
-    const cartId = await createCartDB(userId);
+    const cartId = await findCartDB(userId);
     await deleteFromCartDB(cartId, productId);
 
     res.status(200).json({ message: "Product removed" });

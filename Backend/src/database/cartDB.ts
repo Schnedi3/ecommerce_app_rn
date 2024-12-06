@@ -1,6 +1,6 @@
 import { pool } from "./db";
 
-export const createCartDB = async (userId: string) => {
+export const findCartDB = async (userId: string) => {
   const findCartQuery = `
     SELECT id FROM cart
     WHERE user_id = $1`;
