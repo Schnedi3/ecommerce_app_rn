@@ -10,6 +10,7 @@ export default {
     disabled: "#a1a1aa",
     accent: "#0ea5e9",
     border: "rgba(0, 0, 0, 0.2)",
+    success: "#7abf9e",
   },
   dark: {
     primaryBg: "#202024",
@@ -22,5 +23,6 @@ export default {
     disabled: "#a1a1aa",
     accent: "#f472b6",
     border: "rgba(255, 255, 255, 0.2)",
+    success: "#5a9679",
   },
 };

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
+  View,
 } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { useUser } from "@clerk/clerk-expo";
@@ -12,12 +13,15 @@ import { useUser } from "@clerk/clerk-expo";
 import Colors from "@/src/constants/Colors";
 import { usePayment } from "@/src/api/payment";
 import { useAddOrder } from "@/src/api/order";
+import Modal from "@/src/components/SuccessModal";
 
 export default function Payment({
   totalCart,
 }: {
   totalCart: number;
 }): JSX.Element {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -51,9 +55,10 @@ export default function Payment({
 
     if (error) {
       Alert.alert(`${error.code}`, error.message);
+    } else {
+      setIsModalOpen(true);
+      addOrder(totalCart);
     }
-    Alert.alert("Success", "Your order is confirmed!");
-    addOrder(totalCart);
   };
 
   useEffect(() => {
@@ -61,18 +66,22 @@ export default function Payment({
   }, []);
 
   return (
-    <Pressable
-      style={({ pressed }) => [
-        styles.payment,
-        { backgroundColor: pressed ? color.accent : color.invertedBg },
-      ]}
-      onPress={openPaymentSheet}
-      disabled={!loading}
-    >
-      <Text style={[styles.paymentText, { color: color.invertedText }]}>
-        Checkout
-      </Text>
-    </Pressable>
+    <View>
+      <Pressable
+        style={({ pressed }) => [
+          styles.payment,
+          { backgroundColor: pressed ? color.accent : color.invertedBg },
+        ]}
+        onPress={openPaymentSheet}
+        disabled={!loading}
+      >
+        <Text style={[styles.paymentText, { color: color.invertedText }]}>
+          Checkout
+        </Text>
+      </Pressable>
+
+      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    </View>
   );
 }
 
