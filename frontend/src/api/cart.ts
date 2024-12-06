@@ -1,10 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth, useUser } from "@clerk/clerk-expo";
+import { useAuth } from "@clerk/clerk-expo";
 
 import { customAxios } from "./customAxios";
+import { useAuthStore } from "@/src/store/authStore";
 
 export const useGetCart = () => {
-  const { user } = useUser();
+  const { isAuthenticated } = useAuthStore();
   const { getToken } = useAuth();
 
   return useQuery({
@@ -17,7 +18,7 @@ export const useGetCart = () => {
       return data;
     },
     initialData: [],
-    enabled: !!user,
+    enabled: isAuthenticated,
   });
 };
 
