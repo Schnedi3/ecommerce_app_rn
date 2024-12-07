@@ -1,7 +1,8 @@
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
 
 import Colors from "@/src/constants/Colors";
 import { useGetUserOrders } from "@/src/api/order";
+import OrderCard from "../components/OrderCard";
 
 export default function Orders(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -17,12 +18,13 @@ export default function Orders(): JSX.Element {
     );
   }
 
-  console.log(orders);
-
   return (
-    <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-      <Text style={[styles.title, { color: color.primaryText }]}>Orders</Text>
-    </View>
+    <FlatList
+      style={{ backgroundColor: color.secondaryBg }}
+      contentContainerStyle={styles.ordersContainer}
+      data={orders}
+      renderItem={({ item }) => <OrderCard order={item} />}
+    />
   );
 }
 
@@ -36,5 +38,8 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandBold",
     fontSize: 60,
     opacity: 0.35,
+  },
+  ordersContainer: {
+    paddingHorizontal: "5%",
   },
 });

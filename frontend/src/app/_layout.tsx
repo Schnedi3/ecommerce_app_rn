@@ -49,8 +49,6 @@ function RootLayout() {
         return "Home";
       case "user":
         return "User";
-      case "cart":
-        return "Cart";
     }
   };
 
@@ -79,6 +77,7 @@ function RootLayout() {
         options={{ headerTitle: "Details", headerRight: () => <Header /> }}
       />
       <Stack.Screen name="cart" options={{ headerTitle: "Cart" }} />
+      <Stack.Screen name="orders" options={{ headerTitle: "Orders" }} />
     </Stack>
   );
 }
