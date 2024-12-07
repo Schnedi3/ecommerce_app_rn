@@ -9,6 +9,7 @@ import {
 import Colors from "@/src/constants/Colors";
 import { useGetProducts } from "@/src/api/product";
 import ProductCard from "@/src/components/ProductCard";
+import { Link } from "expo-router";
 
 export default function Home(): JSX.Element {
   const colorTheme = useColorScheme();
@@ -30,7 +31,11 @@ export default function Home(): JSX.Element {
       columnWrapperStyle={{ justifyContent: "space-between" }}
       data={products}
       numColumns={2}
-      renderItem={({ item }) => <ProductCard product={item} />}
+      renderItem={({ item }) => (
+        <Link href={`/detail/${item.id}`}>
+          <ProductCard product={item} />
+        </Link>
+      )}
       keyExtractor={(item) => item.id}
     />
   );

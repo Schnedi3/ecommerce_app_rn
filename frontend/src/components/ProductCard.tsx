@@ -1,13 +1,11 @@
 import {
   Dimensions,
   Image,
-  Pressable,
   StyleSheet,
   Text,
   useColorScheme,
   View,
 } from "react-native";
-import { router } from "expo-router";
 
 import { ICartItem, IProduct } from "@/src/types/types";
 import Colors from "@/src/constants/Colors";
@@ -31,20 +29,7 @@ export default function ProductCard({
   const inCart = cart.some((item: ICartItem) => item.product_id === id);
 
   return (
-    <Pressable
-      style={[
-        styles.singleCard,
-        {
-          borderColor: color.border,
-        },
-      ]}
-      onPress={() =>
-        router.push({
-          pathname: "/detail/[id]",
-          params: { id },
-        })
-      }
-    >
+    <View style={[styles.singleCard, { borderColor: color.border }]}>
       <Image source={{ uri: image }} style={styles.image} />
       <View>
         <Text style={[styles.title, { color: color.secondaryText }]}>
@@ -67,7 +52,7 @@ export default function ProductCard({
           )}
         </View>
       </View>
-    </Pressable>
+    </View>
   );
 }
 

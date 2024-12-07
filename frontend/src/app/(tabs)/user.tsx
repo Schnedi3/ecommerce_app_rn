@@ -4,12 +4,13 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  TouchableOpacity,
   useColorScheme,
   View,
 } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
 import Colors from "@/src/constants/Colors";
@@ -84,27 +85,26 @@ export default function user(): JSX.Element {
 
       <View style={styles.buttonsContainer}>
         {isAuthenticated && (
-          <Pressable
-            style={({ pressed }) => [
-              styles.loginButton,
-              pressed && { backgroundColor: color.primaryBg },
-              { borderColor: color.border },
-            ]}
-            onPress={() => router.push("/orders")}
+          <Link
+            href="/orders"
+            style={[styles.button, { borderColor: color.border }]}
+            asChild
           >
-            <Ionicons
-              size={26}
-              name="archive-outline"
-              color={color.secondaryText}
-            />
-            <Text style={[styles.loginText, { color: color.secondaryText }]}>
-              Orders
-            </Text>
-          </Pressable>
+            <Pressable>
+              <Ionicons
+                size={26}
+                name="archive-outline"
+                color={color.secondaryText}
+              />
+              <Text style={[styles.buttonText, { color: color.secondaryText }]}>
+                Orders
+              </Text>
+            </Pressable>
+          </Link>
         )}
         <Pressable
           style={({ pressed }) => [
-            styles.loginButton,
+            styles.button,
             pressed && { backgroundColor: color.primaryBg },
             { borderColor: color.border },
           ]}
@@ -115,7 +115,7 @@ export default function user(): JSX.Element {
             name={isAuthenticated ? "logout" : "google"}
             color={color.secondaryText}
           />
-          <Text style={[styles.loginText, { color: color.secondaryText }]}>
+          <Text style={[styles.buttonText, { color: color.secondaryText }]}>
             {isAuthenticated ? "Logout" : "Login with Google"}
           </Text>
         </Pressable>
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     top: 250,
   },
-  loginButton: {
+  button: {
     paddingHorizontal: 80,
     paddingVertical: 20,
     flexDirection: "row",
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     gap: 40,
     borderBottomWidth: 1,
   },
-  loginText: {
+  buttonText: {
     fontFamily: "QuickSandMedium",
     fontSize: 20,
   },
