@@ -6,26 +6,23 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from "react-native";
 import { router, useLocalSearchParams } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
-import Colors from "@/src/constants/Colors";
 import { useGetProduct } from "@/src/api/product";
 import { useAddToCart, useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useAuthStore } from "@/src/store/authStore";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const { width } = Dimensions.get("window");
 
 export default function Detail(): JSX.Element {
   const [quantity, setQuantity] = useState<number>(1);
 
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
-
+  const { color } = useThemeColor();
   const { id } = useLocalSearchParams();
   const { data: product } = useGetProduct(Number(id));
   const { data: cart } = useGetCart();

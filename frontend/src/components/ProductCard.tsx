@@ -1,16 +1,9 @@
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 
 import { ICartItem, IProduct } from "@/src/types/types";
-import Colors from "@/src/constants/Colors";
 import { useGetCart } from "@/src/api/cart";
 import { useAuthStore } from "@/src/store/authStore";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const { width } = Dimensions.get("window");
 
@@ -19,8 +12,7 @@ export default function ProductCard({
 }: {
   product: IProduct;
 }): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { id, title, image, price } = product;
   const { data: cart } = useGetCart();

@@ -1,15 +1,8 @@
-import {
-  Modal,
-  Pressable,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import { router } from "expo-router";
 
-import Colors from "@/src/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 interface IModalProps {
   isModalOpen: boolean;
@@ -20,8 +13,7 @@ export default function SuccessModal({
   isModalOpen,
   setIsModalOpen,
 }: IModalProps) {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const goToHome = () => {
     setIsModalOpen(false);

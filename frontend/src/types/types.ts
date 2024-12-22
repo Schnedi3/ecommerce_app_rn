@@ -6,6 +6,15 @@ export interface IProduct {
   price: number;
 }
 
+export interface IOrderProps {
+  createdat: string;
+  image: string;
+  price: string;
+  quantity: number;
+  title: string;
+  total_price: string;
+}
+
 export interface ICartItem extends IProduct {
   product_id: number;
   quantity: number;

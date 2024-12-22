@@ -1,19 +1,12 @@
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
 
-import Colors from "@/src/constants/Colors";
 import { useGetProducts } from "@/src/api/product";
 import ProductCard from "@/src/components/ProductCard";
 import { Link } from "expo-router";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Home(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
   const { data: products } = useGetProducts();
 
   if (!products) {

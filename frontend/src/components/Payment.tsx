@@ -1,19 +1,12 @@
 import { useEffect, useState } from "react";
-import {
-  Alert,
-  Pressable,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { useStripe } from "@stripe/stripe-react-native";
 import { useUser } from "@clerk/clerk-expo";
 
-import Colors from "@/src/constants/Colors";
 import { usePayment } from "@/src/api/payment";
 import { useAddOrder } from "@/src/api/order";
 import Modal from "@/src/components/SuccessModal";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Payment({
   totalCart,
@@ -25,8 +18,7 @@ export default function Payment({
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { mutate: paymentSheet } = usePayment();
   const { user } = useUser();

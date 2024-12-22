@@ -1,15 +1,14 @@
-import { StyleSheet, Text, useColorScheme, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { router } from "expo-router";
 
-import Colors from "@/src/constants/Colors";
 import { useAuthStore } from "@/src/store/authStore";
 import { useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Header() {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { isAuthenticated } = useAuthStore();
   const { data: cart } = useGetCart();

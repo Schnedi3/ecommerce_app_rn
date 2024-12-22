@@ -1,26 +1,17 @@
 import { useCallback, useEffect } from "react";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 import { Link, router } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 
-import Colors from "@/src/constants/Colors";
 import { googleOAuth } from "@/src/lib/oauth";
 import { useSaveUser } from "@/src/api/auth";
 import { useAuthStore } from "@/src/store/authStore";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function user(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
   const { user } = useUser();

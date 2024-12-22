@@ -1,12 +1,11 @@
-import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 
-import Colors from "@/src/constants/Colors";
 import { useGetUserOrders } from "@/src/api/order";
-import OrderCard from "../components/OrderCard";
+import OrderCard from "@/src/components/OrderCard";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Orders(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { data: orders } = useGetUserOrders();
 

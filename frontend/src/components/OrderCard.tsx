@@ -1,19 +1,10 @@
-import { Image, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-import Colors from "@/src/constants/Colors";
-
-interface IOrderProps {
-  createdat: string;
-  image: string;
-  price: string;
-  quantity: number;
-  title: string;
-  total_price: string;
-}
+import { useThemeColor } from "@/src/hooks/useThemeColor";
+import { IOrderProps } from "@/src/types/types";
 
 export default function OrderCard({ order }: { order: IOrderProps }) {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { createdat, image, price, quantity, title, total_price } = order;
 

@@ -1,17 +1,16 @@
-import { FlatList, StyleSheet, Text, useColorScheme, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import { StripeProvider } from "@stripe/stripe-react-native";
 
-import Colors from "@/src/constants/Colors";
 import { useGetCart } from "@/src/api/cart";
 import CartItem from "@/src/components/CartItem";
 import { ICartItem } from "@/src/types/types";
 import Payment from "@/src/components/Payment";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const publishableKey = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 
 export default function Cart(): JSX.Element {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { data: cart } = useGetCart();
 

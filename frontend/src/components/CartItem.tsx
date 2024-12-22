@@ -1,20 +1,12 @@
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import Colors from "@/src/constants/Colors";
 import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
+import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function CartItem({ item }: { item: ICartItem }) {
-  const colorTheme = useColorScheme();
-  const color = Colors[colorTheme ?? "light"];
+  const { color } = useThemeColor();
 
   const { title, image, price, quantity, product_id } = item;
   const { mutate: deleteFromCart } = useDeleteFromCart();
