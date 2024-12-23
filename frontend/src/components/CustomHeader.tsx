@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
-import { Link, router } from "expo-router";
+import { AntDesign } from "@expo/vector-icons";
+import { Link } from "expo-router";
 
 import { useAuthStore } from "@/src/store/authStore";
 import { useGetCart } from "@/src/api/cart";
@@ -19,40 +19,20 @@ export const CustomHeader = ({ title }: { title: string }) => {
 
   return (
     <View
-      style={{
-        width: "100%",
-        height: 50,
-        paddingHorizontal: 15,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        backgroundColor: color.primaryBg,
-        borderBottomWidth: 1,
-        borderColor: color.border,
-      }}
+      style={[
+        styles.header,
+        { borderBottomColor: color.border, backgroundColor: color.primaryBg },
+      ]}
     >
-      <TouchableOpacity onPress={() => router.back()} activeOpacity={0.5}>
-        <Ionicons name="chevron-down" size={24} color={color.primaryText} />
-      </TouchableOpacity>
-
-      <Text
-        style={[
-          {
-            fontFamily: "QuickSandBold",
-            fontSize: 20,
-            color: color.primaryText,
-          },
-        ]}
-      >
-        {title}
+      <Text style={[styles.title, { color: color.primaryText }]}>
+        {title ? title : "Loading"}
       </Text>
 
       <Link href="/(modals)/cart" asChild>
         <TouchableOpacity activeOpacity={0.5} disabled={!isAuthenticated}>
           <AntDesign
             name="shoppingcart"
-            size={24}
-            color={color.secondaryText}
+            style={{ color: color.secondaryText, fontSize: 24 }}
           />
           {cart.length > 0 && (
             <View style={[styles.badge, { backgroundColor: color.accent }]}>
@@ -68,6 +48,19 @@ export const CustomHeader = ({ title }: { title: string }) => {
 };
 
 const styles = StyleSheet.create({
+  header: {
+    width: "100%",
+    height: 50,
+    paddingHorizontal: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+  },
+  title: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
   badge: {
     width: 16,
     height: 16,

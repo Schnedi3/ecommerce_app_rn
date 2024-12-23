@@ -1,4 +1,10 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
@@ -15,11 +21,14 @@ export const LoginButton = ({
   const { color } = useThemeColor();
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      style={[
+    <Pressable
+      style={({ pressed }) => [
         styles.loginButton,
-        { borderColor: color.border, backgroundColor: color.primaryBg },
+        {
+          borderColor: color.border,
+          backgroundColor: color.primaryBg,
+          opacity: pressed ? 0.5 : 1,
+        },
       ]}
       onPress={onPress}
     >
@@ -33,7 +42,7 @@ export const LoginButton = ({
           style={{ fontSize: 20, color: color.accent }}
         />
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

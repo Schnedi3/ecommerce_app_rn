@@ -46,7 +46,7 @@ export const ProductCard = ({
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   singleCard: {

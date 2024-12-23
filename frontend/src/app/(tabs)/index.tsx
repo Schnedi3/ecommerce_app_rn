@@ -1,9 +1,16 @@
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
-import { Link } from "expo-router";
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { Link, Stack } from "expo-router";
 
 import { useGetProducts } from "@/src/api/product";
 import { ProductCard } from "@/src/components/ProductCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
+import { CustomHeader } from "@/src/components/CustomHeader";
 
 export default function Home(): JSX.Element {
   const { color } = useThemeColor();
@@ -18,19 +25,29 @@ export default function Home(): JSX.Element {
   }
 
   return (
-    <FlatList
-      style={{ backgroundColor: color.secondaryBg }}
-      contentContainerStyle={styles.contentContainer}
-      columnWrapperStyle={{ justifyContent: "space-between" }}
-      data={products}
-      numColumns={2}
-      renderItem={({ item }) => (
-        <Link href={`/detail/${item.id}`}>
-          <ProductCard product={item} />
-        </Link>
-      )}
-      keyExtractor={(item) => item.id}
-    />
+    <>
+      <Stack.Screen
+        options={{
+          headerShown: true,
+          header: () => <CustomHeader title="Home" />,
+        }}
+      />
+
+      <FlatList
+        style={{ backgroundColor: color.secondaryBg }}
+        contentContainerStyle={styles.contentContainer}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        data={products}
+        numColumns={2}
+        renderItem={({ item }) => (
+          <Link href={`/detail/${item.id}`} asChild>
+            <TouchableOpacity activeOpacity={0.5}>
+              <ProductCard product={item} />
+            </TouchableOpacity>
+          </Link>
+        )}
+      />
+    </>
   );
 }
 

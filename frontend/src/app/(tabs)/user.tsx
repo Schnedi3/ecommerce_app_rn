@@ -1,5 +1,12 @@
 import { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
@@ -111,14 +118,7 @@ export default function User(): JSX.Element {
       <View style={styles.footer}>
         {isAuthenticated ? (
           <View style={{ gap: 15 }}>
-            <Link
-              href="/orders"
-              style={[
-                styles.orderBtn,
-                { borderColor: color.border, backgroundColor: color.primaryBg },
-              ]}
-              asChild
-            >
+            <Link href="/(modals)/orders" asChild>
               <LoginButton iconName="archive-outline" buttonText="Orders" />
             </Link>
 
@@ -199,24 +199,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 20,
     borderWidth: 1,
-  },
-  // order
-  orderBtn: {
-    width: "80%",
-    paddingVertical: 20,
-    paddingHorizontal: 30,
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-  },
-  ordenBtnContent: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  orderBtnTxt: {
-    fontFamily: "QuickSandSemi",
-    fontSize: 17,
   },
 });
