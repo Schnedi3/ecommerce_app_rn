@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { IOrderProps } from "@/src/types/types";
 
-export default function OrderCard({ order }: { order: IOrderProps }) {
+export const OrderCard = ({ order }: { order: IOrderProps }) => {
   const { color } = useThemeColor();
 
   const { createdat, image, price, quantity, title, total_price } = order;

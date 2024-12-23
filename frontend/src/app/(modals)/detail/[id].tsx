@@ -1,9 +1,7 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
-  Dimensions,
   Image,
-  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -18,8 +16,6 @@ import { ICartItem } from "@/src/types/types";
 import { useAuthStore } from "@/src/store/authStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { CustomHeader } from "@/src/components/CustomHeader";
-
-const { width } = Dimensions.get("window");
 
 export default function Detail(): JSX.Element {
   const [quantity, setQuantity] = useState<number>(1);
@@ -71,30 +67,31 @@ export default function Detail(): JSX.Element {
         </View>
 
         <View style={styles.quantity}>
-          <Pressable
-            style={({ pressed }) => [
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[
               styles.quantityButton,
-              { borderColor: pressed ? color.accent : color.secondaryText },
+              { borderColor: color.secondaryText },
             ]}
             onPress={decreaseCartQuantity}
             disabled={quantity === 1}
           >
             <Ionicons
-              style={{ textAlign: "center" }}
               name="remove-outline"
-              size={26}
-              color={color.secondaryText}
+              style={[styles.quantityIcon, { color: color.secondaryText }]}
             />
-          </Pressable>
+          </TouchableOpacity>
           <Text style={[styles.quantityText, { color: color.secondaryText }]}>
             {inCart ? foundProduct.quantity : quantity}
           </Text>
-          <Pressable
-            style={({ pressed }) => [
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={[
               styles.quantityButton,
-              { borderColor: pressed ? color.accent : color.secondaryText },
+              { borderColor: color.secondaryText },
             ]}
             onPress={increaseCartQuantity}
+            disabled={!isAuthenticated}
           >
             <Ionicons
               style={{ textAlign: "center" }}
@@ -102,19 +99,12 @@ export default function Detail(): JSX.Element {
               size={26}
               color={color.secondaryText}
             />
-          </Pressable>
+          </TouchableOpacity>
         </View>
 
-        <Pressable
-          style={({ pressed }) => [
-            styles.addButton,
-            {
-              backgroundColor:
-                (isAuthenticated && inCart) || pressed
-                  ? color.accent
-                  : color.invertedBg,
-            },
-          ]}
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={[styles.addButton, { backgroundColor: color.invertedBg }]}
           onPress={
             isAuthenticated
               ? () => addToCart({ id: Number(id), quantity })
@@ -129,7 +119,7 @@ export default function Detail(): JSX.Element {
               ? "Already in cart"
               : "Add to cart"}
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </>
   );
@@ -143,7 +133,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: width,
+    width: "100%",
     padding: 30,
     gap: 20,
   },
@@ -177,6 +167,10 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderWidth: 1,
     borderRadius: 4,
+  },
+  quantityIcon: {
+    fontSize: 30,
+    textAlign: "center",
   },
   quantityText: {
     paddingBottom: 5,

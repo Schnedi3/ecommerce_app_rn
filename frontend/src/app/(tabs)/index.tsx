@@ -1,8 +1,8 @@
 import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { Link } from "expo-router";
 
 import { useGetProducts } from "@/src/api/product";
-import ProductCard from "@/src/components/ProductCard";
-import { Link } from "expo-router";
+import { ProductCard } from "@/src/components/ProductCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Home(): JSX.Element {

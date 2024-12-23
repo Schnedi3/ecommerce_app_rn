@@ -7,11 +7,11 @@ import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const { width } = Dimensions.get("window");
 
-export default function ProductCard({
+export const ProductCard = ({
   product,
 }: {
   product: IProduct;
-}): JSX.Element {
+}): JSX.Element => {
   const { color } = useThemeColor();
 
   const { id, title, image, price } = product;

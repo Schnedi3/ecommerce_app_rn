@@ -9,10 +9,10 @@ interface IModalProps {
   setIsModalOpen: (isModalOpen: boolean) => void;
 }
 
-export default function SuccessModal({
+export const SuccessModal = ({
   isModalOpen,
   setIsModalOpen,
-}: IModalProps) {
+}: IModalProps) => {
   const { color } = useThemeColor();
 
   const goToHome = () => {

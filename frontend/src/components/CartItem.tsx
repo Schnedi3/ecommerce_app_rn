@@ -5,7 +5,7 @@ import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function CartItem({ item }: { item: ICartItem }) {
+export const CartItem = ({ item }: { item: ICartItem }) => {
   const { color } = useThemeColor();
 
   const { title, image, price, quantity, product_id } = item;
@@ -47,7 +47,7 @@ export default function CartItem({ item }: { item: ICartItem }) {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   itemContainer: {

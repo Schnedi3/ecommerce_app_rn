@@ -1,31 +1,57 @@
-import { useCallback, useEffect } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { AntDesign, Ionicons } from "@expo/vector-icons";
+import { useEffect } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
-import { Link, router } from "expo-router";
+import * as Linking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
+import { Link, router } from "expo-router";
 
-import { googleOAuth } from "@/src/lib/oauth";
-import { useSaveUser } from "@/src/api/auth";
-import { useAuthStore } from "@/src/store/authStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
+import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
+import { LoginButton } from "@/src/components/LoginButton";
+import { useAuthStore } from "@/src/store/authStore";
+import { useSaveUser } from "@/src/api/auth";
 
-export default function user(): JSX.Element {
+enum Strategy {
+  Google = "oauth_google",
+  Apple = "oauth_apple",
+  Facebook = "oauth_facebook",
+}
+
+export default function User(): JSX.Element {
+  useWarmUpBrowser();
   const { color } = useThemeColor();
-
-  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const { mutate: saveUser } = useSaveUser();
   const { user } = useUser();
   const { signOut } = useClerk();
-  const { mutate: saveUser } = useSaveUser();
   const { isAuthenticated, setIsAuthenticated } = useAuthStore();
 
-  const handleLogin = useCallback(async () => {
+  const { startOAuthFlow: googleAuth } = useOAuth({
+    strategy: Strategy.Google,
+  });
+  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: Strategy.Apple });
+  const { startOAuthFlow: facebookAuth } = useOAuth({
+    strategy: Strategy.Facebook,
+  });
+
+  const handleLogin = async (social: Strategy) => {
+    const selectedStrategy = {
+      [Strategy.Google]: googleAuth,
+      [Strategy.Apple]: appleAuth,
+      [Strategy.Facebook]: facebookAuth,
+    }[social];
+
     try {
-      await googleOAuth(startOAuthFlow);
-    } catch (err) {
-      console.error(`OAuth error: ${err}`);
+      const { createdSessionId, setActive } = await selectedStrategy({
+        redirectUrl: Linking.createURL("user", { scheme: "myapp" }),
+      });
+
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }, []);
+  };
 
   useEffect(() => {
     if (user) {
@@ -34,9 +60,8 @@ export default function user(): JSX.Element {
         name: user.firstName,
         email: user.emailAddresses[0].emailAddress,
       });
-      setIsAuthenticated(true);
     }
-  }, [user]);
+  }, []);
 
   const handleLogout = () => {
     signOut();
@@ -47,11 +72,15 @@ export default function user(): JSX.Element {
   return (
     <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
       <LinearGradient colors={["#c54497", "#403999"]} style={styles.header}>
-        {user && (
-          <Image source={{ uri: user.imageUrl }} style={styles.bigAvatar} />
-        )}
+        <Image
+          source={
+            user
+              ? { uri: user.imageUrl }
+              : require("@/assets/images/avatar.jpg")
+          }
+          style={styles.bigAvatar}
+        />
       </LinearGradient>
-
       <View style={styles.userInfo}>
         <Image
           source={
@@ -67,49 +96,59 @@ export default function user(): JSX.Element {
         <Text
           style={[
             styles.userEmail,
-            { color: color.primaryText, backgroundColor: color.primaryBg },
+            {
+              color: color.primaryText,
+              backgroundColor: color.primaryBg,
+              borderColor: color.border,
+            },
           ]}
         >
           {user ? user.emailAddresses[0].emailAddress : "guest@guest.com"}
         </Text>
       </View>
 
-      <View style={styles.buttonsContainer}>
-        {isAuthenticated && (
-          <Link
-            href="/orders"
-            style={[styles.button, { borderColor: color.border }]}
-            asChild
-          >
-            <Pressable>
-              <Ionicons
-                size={26}
-                name="archive-outline"
-                color={color.secondaryText}
-              />
-              <Text style={[styles.buttonText, { color: color.secondaryText }]}>
-                Orders
-              </Text>
-            </Pressable>
-          </Link>
+      {/* footer buttons */}
+      <View style={styles.footer}>
+        {isAuthenticated ? (
+          <View style={{ gap: 15 }}>
+            <Link
+              href="/orders"
+              style={[
+                styles.orderBtn,
+                { borderColor: color.border, backgroundColor: color.primaryBg },
+              ]}
+              asChild
+            >
+              <LoginButton iconName="archive-outline" buttonText="Orders" />
+            </Link>
+
+            <LoginButton
+              onPress={() => handleLogout()}
+              iconName="log-out-outline"
+              buttonText="Log out"
+            />
+          </View>
+        ) : (
+          <View style={{ gap: 15 }}>
+            <LoginButton
+              onPress={() => handleLogin(Strategy.Google)}
+              iconName="logo-google"
+              buttonText="Continue with Google"
+            />
+
+            <LoginButton
+              onPress={() => handleLogin(Strategy.Apple)}
+              iconName="logo-apple"
+              buttonText="Continue with Apple"
+            />
+
+            <LoginButton
+              onPress={() => handleLogin(Strategy.Facebook)}
+              iconName="logo-facebook"
+              buttonText="Continue with Facebook"
+            />
+          </View>
         )}
-        <Pressable
-          style={({ pressed }) => [
-            styles.button,
-            pressed && { backgroundColor: color.primaryBg },
-            { borderColor: color.border },
-          ]}
-          onPress={isAuthenticated ? handleLogout : handleLogin}
-        >
-          <AntDesign
-            size={24}
-            name={isAuthenticated ? "logout" : "google"}
-            color={color.secondaryText}
-          />
-          <Text style={[styles.buttonText, { color: color.secondaryText }]}>
-            {isAuthenticated ? "Logout" : "Login with Google"}
-          </Text>
-        </Pressable>
       </View>
     </View>
   );
@@ -118,6 +157,7 @@ export default function user(): JSX.Element {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingVertical: 40,
   },
   header: {
     position: "absolute",
@@ -130,6 +170,12 @@ const styles = StyleSheet.create({
     height: 300,
     zIndex: -1,
   },
+  // login
+  footer: {
+    top: 250,
+    alignItems: "center",
+  },
+  // userInfo
   userInfo: {
     top: 170,
     alignItems: "center",
@@ -138,7 +184,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 150,
     height: 150,
-    borderWidth: 5,
+    borderWidth: 2,
     borderRadius: 100,
   },
   userName: {
@@ -152,21 +198,25 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandMedium",
     fontSize: 16,
     borderRadius: 20,
-    elevation: 3,
+    borderWidth: 1,
   },
-  buttonsContainer: {
-    top: 250,
-  },
-  button: {
-    paddingHorizontal: 80,
+  // order
+  orderBtn: {
+    width: "80%",
     paddingVertical: 20,
+    paddingHorizontal: 30,
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  ordenBtnContent: {
+    width: "100%",
     flexDirection: "row",
     alignItems: "center",
-    gap: 40,
-    borderBottomWidth: 1,
+    justifyContent: "space-between",
   },
-  buttonText: {
-    fontFamily: "QuickSandMedium",
-    fontSize: 20,
+  orderBtnTxt: {
+    fontFamily: "QuickSandSemi",
+    fontSize: 17,
   },
 });

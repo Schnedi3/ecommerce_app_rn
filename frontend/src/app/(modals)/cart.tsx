@@ -2,9 +2,9 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { StripeProvider } from "@stripe/stripe-react-native";
 
 import { useGetCart } from "@/src/api/cart";
-import CartItem from "@/src/components/CartItem";
+import { CartItem } from "@/src/components/CartItem";
 import { ICartItem } from "@/src/types/types";
-import Payment from "@/src/components/Payment";
+import { Payment } from "@/src/components/Payment";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const publishableKey = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;

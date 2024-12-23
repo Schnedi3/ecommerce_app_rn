@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
 
-import { tokenCache } from "@/src/lib/token";
+import { tokenCache } from "@/src/lib/tokenCache";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 const queryClient = new QueryClient();
@@ -18,7 +18,7 @@ const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 export default function InitialLayout(): JSX.Element {
   return (
     <QueryClientProvider client={queryClient}>
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache()}>
         <ClerkLoaded>
           <RootLayout />
         </ClerkLoaded>
@@ -64,8 +64,14 @@ function RootLayout() {
               animation: "slide_from_bottom",
             }}
           />
-          <Stack.Screen name="cart" />
-          <Stack.Screen name="orders" />
+          <Stack.Screen
+            name="(modals)/cart"
+            options={{ presentation: "modal", animation: "slide_from_bottom" }}
+          />
+          <Stack.Screen
+            name="(modals)/orders"
+            options={{ presentation: "modal", animation: "slide_from_bottom" }}
+          />
         </Stack>
       </View>
       <StatusBar

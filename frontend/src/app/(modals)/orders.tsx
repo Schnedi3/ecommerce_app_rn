@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 
 import { useGetUserOrders } from "@/src/api/order";
-import OrderCard from "@/src/components/OrderCard";
+import { OrderCard } from "@/src/components/OrderCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
 export default function Orders(): JSX.Element {

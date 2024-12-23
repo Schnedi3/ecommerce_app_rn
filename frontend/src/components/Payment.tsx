@@ -5,14 +5,14 @@ import { useUser } from "@clerk/clerk-expo";
 
 import { usePayment } from "@/src/api/payment";
 import { useAddOrder } from "@/src/api/order";
-import Modal from "@/src/components/SuccessModal";
+import { SuccessModal } from "@/src/components/SuccessModal";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function Payment({
+export const Payment = ({
   totalCart,
 }: {
   totalCart: number;
-}): JSX.Element {
+}): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -72,7 +72,7 @@ export default function Payment({
         </Text>
       </Pressable>
 
-      <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <SuccessModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </View>
   );
 }
