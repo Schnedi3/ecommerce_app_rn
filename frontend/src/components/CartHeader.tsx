@@ -7,7 +7,7 @@ import { useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export default function Header() {
+export const CartHeader = () => {
   const { color } = useThemeColor();
 
   const { isAuthenticated } = useAuthStore();
@@ -39,7 +39,7 @@ export default function Header() {
       )}
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   badge: {
