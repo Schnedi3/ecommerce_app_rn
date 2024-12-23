@@ -57,7 +57,13 @@ function RootLayout() {
       <View style={{ flex: 1 }}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(modals)/detail/[id]" />
+          <Stack.Screen
+            name="(modals)/detail/[id]"
+            options={{
+              headerShown: true,
+              animation: "slide_from_bottom",
+            }}
+          />
           <Stack.Screen name="cart" />
           <Stack.Screen name="orders" />
         </Stack>

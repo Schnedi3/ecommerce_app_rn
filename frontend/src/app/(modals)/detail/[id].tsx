@@ -17,7 +17,7 @@ import { useAddToCart, useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useAuthStore } from "@/src/store/authStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import { CartHeader } from "@/src/components/CartHeader";
+import { CustomHeader } from "@/src/components/CustomHeader";
 
 const { width } = Dimensions.get("window");
 
@@ -55,46 +55,7 @@ export default function Detail(): JSX.Element {
   return (
     <>
       <Stack.Screen
-        options={{
-          headerShown: true,
-          animation: "slide_from_bottom",
-          headerTitle: title,
-          headerTitleAlign: "center",
-          headerTitleStyle: {
-            fontFamily: "QuickSandBold",
-            fontSize: 20,
-            color: color.primaryText,
-          },
-          headerShadowVisible: false,
-          headerStyle: { backgroundColor: "transparent" },
-          headerLeft: () => {
-            return (
-              <TouchableOpacity
-                onPress={() => router.back()}
-                activeOpacity={0.5}
-              >
-                <Ionicons
-                  name="chevron-down"
-                  size={24}
-                  color={color.primaryText}
-                />
-              </TouchableOpacity>
-            );
-          },
-          headerRight: () => <CartHeader />,
-          headerBackground: () => (
-            <View
-              style={[
-                {
-                  flex: 1,
-                  backgroundColor: color.primaryBg,
-                  borderBottomWidth: 1,
-                  borderBottomColor: color.border,
-                },
-              ]}
-            />
-          ),
-        }}
+        options={{ header: () => <CustomHeader title={title} /> }}
       />
 
       <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
