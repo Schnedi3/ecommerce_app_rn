@@ -39,6 +39,11 @@ export default function Detail(): JSX.Element {
     setQuantity((prevQuantity: number) => prevQuantity + 1);
   };
 
+  const handleAddToCart = () => {
+    addToCart({ id: Number(id), quantity });
+    setQuantity(1);
+  };
+
   if (!product) {
     return (
       <View style={[styles.loading, { backgroundColor: color.secondaryBg }]}>
@@ -106,9 +111,7 @@ export default function Detail(): JSX.Element {
           activeOpacity={0.5}
           style={[styles.addButton, { backgroundColor: color.invertedBg }]}
           onPress={
-            isAuthenticated
-              ? () => addToCart({ id: Number(id), quantity })
-              : () => router.push("/user")
+            isAuthenticated ? handleAddToCart : () => router.push("/user")
           }
           disabled={isAuthenticated && inCart}
         >
