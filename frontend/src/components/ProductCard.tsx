@@ -21,9 +21,9 @@ export default function ProductCard({
   const inCart = cart.some((item: ICartItem) => item.product_id === id);
 
   return (
-    <View style={[styles.singleCard, { borderColor: color.border }]}>
+    <View style={[styles.singleCard, { backgroundColor: color.primaryBg }]}>
       <Image source={{ uri: image }} style={styles.image} />
-      <View>
+      <View style={{ padding: 10 }}>
         <Text style={[styles.title, { color: color.secondaryText }]}>
           {title}
         </Text>
@@ -52,11 +52,8 @@ const styles = StyleSheet.create({
   singleCard: {
     width: width / 2 - 30,
     height: width * 0.7,
-    borderWidth: 1,
-    borderRadius: 10,
     justifyContent: "space-between",
-    padding: 10,
-    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    borderRadius: 10,
   },
   image: {
     width: "100%",
@@ -68,7 +65,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   priceContainer: {
-    width: "99%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
