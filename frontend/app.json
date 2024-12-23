@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "ecommerce-app",
+    "name": "ecommerce-rn",
     "owner": "schnedi",
-    "slug": "ecommerce-app",
+    "slug": "ecommerce-rn",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.schnedi.ecommerceapp"
+      "package": "com.schnedi.ecommerce"
     },
     "web": {
       "bundler": "metro",
