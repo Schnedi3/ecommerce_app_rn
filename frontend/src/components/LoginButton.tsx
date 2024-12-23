@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
@@ -14,7 +8,7 @@ export const LoginButton = ({
   iconName,
   buttonText,
 }: {
-  onPress?: () => void;
+  onPress: () => void;
   iconName: keyof typeof Ionicons.glyphMap;
   buttonText: string;
 }): JSX.Element => {

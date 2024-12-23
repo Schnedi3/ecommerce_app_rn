@@ -17,6 +17,7 @@ import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
 import { LoginButton } from "@/src/components/LoginButton";
 import { useAuthStore } from "@/src/store/authStore";
 import { useSaveUser } from "@/src/api/auth";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 enum Strategy {
   Google = "oauth_google",
@@ -54,6 +55,7 @@ export default function User(): JSX.Element {
 
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
+        setIsAuthenticated(true);
       }
     } catch (error) {
       console.log(error);
@@ -68,7 +70,7 @@ export default function User(): JSX.Element {
         email: user.emailAddresses[0].emailAddress,
       });
     }
-  }, []);
+  }, [user]);
 
   const handleLogout = () => {
     signOut();
@@ -117,9 +119,33 @@ export default function User(): JSX.Element {
       {/* footer buttons */}
       <View style={styles.footer}>
         {isAuthenticated ? (
-          <View style={{ gap: 15 }}>
-            <Link href="/(modals)/orders" asChild>
-              <LoginButton iconName="archive-outline" buttonText="Orders" />
+          <View style={{ alignItems: "center", gap: 15 }}>
+            <Link
+              href="/(modals)/orders"
+              style={[
+                styles.orderBtn,
+                { borderColor: color.border, backgroundColor: color.primaryBg },
+              ]}
+              asChild
+            >
+              <TouchableOpacity activeOpacity={0.5}>
+                <View style={styles.orderBtnContent}>
+                  <Ionicons
+                    name="archive-outline"
+                    size={24}
+                    color={color.primaryText}
+                  />
+                  <Text
+                    style={[styles.orderBtnTxt, { color: color.secondaryText }]}
+                  >
+                    Orders
+                  </Text>
+                  <FontAwesome6
+                    name="arrow-right-long"
+                    style={{ fontSize: 20, color: color.accent }}
+                  />
+                </View>
+              </TouchableOpacity>
             </Link>
 
             <LoginButton
@@ -170,11 +196,6 @@ const styles = StyleSheet.create({
     height: 300,
     zIndex: -1,
   },
-  // login
-  footer: {
-    top: 250,
-    alignItems: "center",
-  },
   // userInfo
   userInfo: {
     top: 170,
@@ -189,7 +210,7 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontFamily: "QuickSandBold",
-    fontSize: 20,
+    fontSize: 30,
   },
   userEmail: {
     paddingHorizontal: 20,
@@ -199,5 +220,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 20,
     borderWidth: 1,
+  },
+  // footer
+  footer: {
+    top: 250,
+    alignItems: "center",
+  },
+  // orders
+  orderBtn: {
+    width: "80%",
+    paddingVertical: 20,
+    paddingHorizontal: 30,
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+  orderBtnContent: {
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  orderBtnTxt: {
+    fontFamily: "QuickSandSemi",
+    fontSize: 17,
   },
 });

@@ -1,11 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 
 import { customAxios } from "./customAxios";
-import { useAuthStore } from "@/src/store/authStore";
 
 export const useSaveUser = () => {
-  const { setIsAuthenticated } = useAuthStore();
-
   return useMutation({
     mutationFn: ({
       id,
@@ -17,9 +14,6 @@ export const useSaveUser = () => {
       email: string;
     }) => {
       return customAxios.post("/auth", { id, name, email });
-    },
-    onSuccess: () => {
-      setIsAuthenticated(true);
     },
   });
 };
