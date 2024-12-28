@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
-import { UserDB } from "../database/authDB";
+import { saveUserDB } from "../database/userDB";
 import { findCartDB } from "../database/cartDB";
 
-export const User = async (req: Request, res: Response): Promise<void> => {
-  const { id, name, email } = req.body;
+export const saveUser = async (req: Request, res: Response): Promise<void> => {
+  const { id, firstName, lastName, email } = req.body;
 
   try {
-    const result = await UserDB(id, name, email);
+    const result = await saveUserDB(id, firstName, lastName, email);
 
     // create cart
     await findCartDB(result.id);
