@@ -1,10 +1,10 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
+import { Stack } from "expo-router";
 
 import { useGetUserOrders } from "@/src/api/order";
 import { OrderCard } from "@/src/components/OrderCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import { Stack } from "expo-router";
-import { CustomHeader } from "@/src/components/CustomHeader";
+import { IOrderProps } from "@/src/types/types";
 
 export default function Orders(): JSX.Element {
   const { color } = useThemeColor();
@@ -31,7 +31,7 @@ export default function Orders(): JSX.Element {
         <FlatList
           style={{ backgroundColor: color.secondaryBg }}
           contentContainerStyle={styles.ordersContainer}
-          data={orders}
+          data={orders as IOrderProps[]}
           renderItem={({ item }) => <OrderCard order={item} />}
         />
       )}
@@ -65,9 +65,6 @@ const headerStyles = StyleSheet.create({
     justifyContent: "center",
     borderBottomWidth: 1,
   },
-  backIcon: {
-    fontSize: 26,
-  },
   title: {
     fontFamily: "QuickSandBold",
     fontSize: 20,
@@ -86,6 +83,6 @@ const styles = StyleSheet.create({
     opacity: 0.35,
   },
   ordersContainer: {
-    paddingHorizontal: "5%",
+    paddingHorizontal: 25,
   },
 });

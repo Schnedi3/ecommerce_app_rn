@@ -10,14 +10,14 @@ export const OrderCard = ({ order }: { order: IOrderProps }) => {
 
   return (
     <View style={[styles.itemContainer, { borderBottomColor: color.border }]}>
-      <Text style={[styles.date, { color: color.secondaryText }]}>
+      <Text style={[styles.date, { color: color.disabled }]}>
         {new Date(created_at).toLocaleString()}
       </Text>
 
       <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
         <Image source={{ uri: image }} style={styles.image} />
 
-        <View style={styles.titlePrice}>
+        <View>
           <Text style={[styles.title, { color: color.primaryText }]}>
             {title}
           </Text>
@@ -48,18 +48,15 @@ const styles = StyleSheet.create({
   },
   date: {
     fontFamily: "QuickSandMedium",
-    fontSize: 20,
-    opacity: 0.5,
+    fontSize: 17,
   },
   image: {
     width: 80,
     height: 80,
     borderRadius: 4,
   },
-  titlePrice: {
-    gap: 0,
-  },
   title: {
+    width: 250,
     fontFamily: "QuickSandBold",
     fontSize: 16,
   },

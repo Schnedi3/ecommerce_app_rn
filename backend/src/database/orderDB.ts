@@ -25,12 +25,12 @@ export const addOrderDB = async (
 
 export const getUserOrdersDB = async (userId: string) => {
   const getUserOrdersQuery = `
-    SELECT p.image, p.title, oi.quantity, p.price, (oi.quantity * p.price) AS total_price, o.createdAt
-    FROM "order" o
+    SELECT p.image, p.title, oi.quantity, p.price, (oi.quantity * p.price) AS total_price, o.created_at
+    FROM orders o
     JOIN order_item oi ON o.id = oi.order_id
     JOIN product p ON oi.product_id = p.id
     WHERE o.user_id = $1
-    ORDER BY o.createdAt DESC;`;
+    ORDER BY o.created_at DESC;`;
 
   const result = await pool.query(getUserOrdersQuery, [userId]);
   return result.rows;
