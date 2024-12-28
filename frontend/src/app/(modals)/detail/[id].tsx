@@ -108,7 +108,10 @@ export default function Detail(): JSX.Element {
         <Pressable
           style={({ pressed }) => [
             styles.addButton,
-            { backgroundColor: pressed ? color.accent : color.invertedBg },
+            {
+              backgroundColor:
+                pressed || inCart ? color.accent : color.invertedBg,
+            },
           ]}
           onPress={
             isAuthenticated ? handleAddToCart : () => router.push("/user")

@@ -8,35 +8,71 @@ import { CustomHeader } from "@/src/components/CustomHeader";
 
 export default function Orders(): JSX.Element {
   const { color } = useThemeColor();
-
   const { data: orders } = useGetUserOrders();
-
-  if (!orders || orders.length === 0) {
-    return (
-      <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-        <Text style={[styles.title, { color: color.primaryText }]}>Orders</Text>
-      </View>
-    );
-  }
 
   return (
     <>
       <Stack.Screen
         options={{
           headerShown: true,
-          header: () => <CustomHeader title="Orders" />,
+          header: () => <OrderHeader />,
         }}
       />
 
-      <FlatList
-        style={{ backgroundColor: color.secondaryBg }}
-        contentContainerStyle={styles.ordersContainer}
-        data={orders}
-        renderItem={({ item }) => <OrderCard order={item} />}
-      />
+      {!orders || orders.length === 0 ? (
+        <View
+          style={[styles.container, { backgroundColor: color.secondaryBg }]}
+        >
+          <Text style={[styles.title, { color: color.primaryText }]}>
+            Orders
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          style={{ backgroundColor: color.secondaryBg }}
+          contentContainerStyle={styles.ordersContainer}
+          data={orders}
+          renderItem={({ item }) => <OrderCard order={item} />}
+        />
+      )}
     </>
   );
 }
+
+const OrderHeader = () => {
+  const { color } = useThemeColor();
+
+  return (
+    <View
+      style={[
+        headerStyles.header,
+        { borderBottomColor: color.border, backgroundColor: color.primaryBg },
+      ]}
+    >
+      <Text style={[headerStyles.title, { color: color.primaryText }]}>
+        Orders
+      </Text>
+    </View>
+  );
+};
+
+const headerStyles = StyleSheet.create({
+  header: {
+    height: 50,
+    paddingHorizontal: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 1,
+  },
+  backIcon: {
+    fontSize: 26,
+  },
+  title: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
+});
 
 const styles = StyleSheet.create({
   container: {

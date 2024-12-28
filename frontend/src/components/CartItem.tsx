@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   image: {
     width: 90,
     height: 90,
-    borderRadius: 4,
+    borderRadius: 10,
   },
   titlePrice: {
     gap: 0,

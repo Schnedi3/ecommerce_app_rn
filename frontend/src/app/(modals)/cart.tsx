@@ -1,5 +1,6 @@
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { StripeProvider } from "@stripe/stripe-react-native";
+import { Stack } from "expo-router";
 
 import { useGetCart } from "@/src/api/cart";
 import { CartItem } from "@/src/components/CartItem";
@@ -11,7 +12,6 @@ const publishableKey = process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY as string;
 
 export default function Cart(): JSX.Element {
   const { color } = useThemeColor();
-
   const { data: cart } = useGetCart();
 
   const totalCart = cart.reduce(
@@ -19,47 +19,89 @@ export default function Cart(): JSX.Element {
     0
   );
 
-  if (!cart || cart.length === 0) {
-    return (
-      <View
-        style={[styles.emptyContainer, { backgroundColor: color.secondaryBg }]}
-      >
-        <Text style={[styles.empty, { color: color.primaryText }]}>Cart</Text>
-      </View>
-    );
-  }
-
   return (
     <StripeProvider
       publishableKey={publishableKey}
       merchantIdentifier="merchant.ecommerce.com"
       urlScheme="myapp"
     >
-      <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
-        <View>
-          <FlatList
-            style={{ backgroundColor: color.secondaryBg }}
-            contentContainerStyle={styles.contentContainer}
-            data={cart}
-            renderItem={({ item }) => <CartItem item={item} />}
-            keyExtractor={(item) => item.product_id}
-          />
+      <Stack.Screen
+        options={{ headerShown: true, header: () => <CartHeader /> }}
+      />
 
-          <View style={styles.totalContainer}>
-            <Text style={[styles.totalText, { color: color.primaryText }]}>
-              Total
-            </Text>
-            <Text style={[styles.total, { color: color.accent }]}>
-              {totalCart}€
-            </Text>
-          </View>
-
-          <Payment totalCart={totalCart} />
+      {!cart || cart.length === 0 ? (
+        <View
+          style={[
+            styles.emptyContainer,
+            { backgroundColor: color.secondaryBg },
+          ]}
+        >
+          <Text style={[styles.empty, { color: color.primaryText }]}>Cart</Text>
         </View>
-      </View>
+      ) : (
+        <View
+          style={[styles.container, { backgroundColor: color.secondaryBg }]}
+        >
+          <View>
+            <FlatList
+              style={{ backgroundColor: color.secondaryBg }}
+              contentContainerStyle={styles.contentContainer}
+              data={cart}
+              renderItem={({ item }) => <CartItem item={item} />}
+              keyExtractor={(item) => item.product_id}
+            />
+
+            <View style={styles.totalContainer}>
+              <Text style={[styles.totalText, { color: color.primaryText }]}>
+                Total
+              </Text>
+              <Text style={[styles.total, { color: color.accent }]}>
+                {totalCart}€
+              </Text>
+            </View>
+
+            <Payment totalCart={totalCart} />
+          </View>
+        </View>
+      )}
     </StripeProvider>
   );
 }
+
+const CartHeader = () => {
+  const { color } = useThemeColor();
+
+  return (
+    <View
+      style={[
+        headerStyles.header,
+        { borderBottomColor: color.border, backgroundColor: color.primaryBg },
+      ]}
+    >
+      <Text style={[headerStyles.title, { color: color.primaryText }]}>
+        Cart
+      </Text>
+    </View>
+  );
+};
+
+const headerStyles = StyleSheet.create({
+  header: {
+    height: 50,
+    paddingHorizontal: 25,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    borderBottomWidth: 1,
+  },
+  backIcon: {
+    fontSize: 26,
+  },
+  title: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
+});
 
 const styles = StyleSheet.create({
   emptyContainer: {

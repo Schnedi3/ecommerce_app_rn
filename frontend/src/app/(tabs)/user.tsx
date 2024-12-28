@@ -15,7 +15,6 @@ import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 enum Strategy {
   Google = "oauth_google",
   Apple = "oauth_apple",
-  Facebook = "oauth_facebook",
 }
 
 export default function User(): JSX.Element {
@@ -30,15 +29,11 @@ export default function User(): JSX.Element {
     strategy: Strategy.Google,
   });
   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: Strategy.Apple });
-  const { startOAuthFlow: facebookAuth } = useOAuth({
-    strategy: Strategy.Facebook,
-  });
 
   const handleLogin = async (social: Strategy) => {
     const selectedStrategy = {
       [Strategy.Google]: googleAuth,
       [Strategy.Apple]: appleAuth,
-      [Strategy.Facebook]: facebookAuth,
     }[social];
 
     try {
@@ -96,16 +91,7 @@ export default function User(): JSX.Element {
         <Text style={[styles.userName, { color: color.primaryText }]}>
           {user ? user.firstName + " " + user.lastName : "Guest"}
         </Text>
-        <Text
-          style={[
-            styles.userEmail,
-            {
-              color: color.primaryText,
-              backgroundColor: color.primaryBg,
-              borderColor: color.border,
-            },
-          ]}
-        >
+        <Text style={[styles.userEmail, { color: color.primaryText }]}>
           {user ? user.emailAddresses[0].emailAddress : "guest@guest.com"}
         </Text>
       </View>
@@ -161,12 +147,6 @@ export default function User(): JSX.Element {
               iconName="logo-apple"
               buttonText="Continue with Apple"
             />
-
-            <LoginButton
-              onPress={() => handleLogin(Strategy.Facebook)}
-              iconName="logo-facebook"
-              buttonText="Continue with Facebook"
-            />
           </View>
         )}
       </View>
@@ -207,17 +187,12 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   userEmail: {
-    paddingHorizontal: 20,
-    paddingTop: 3,
-    paddingBottom: 6,
     fontFamily: "QuickSandMedium",
     fontSize: 16,
-    borderRadius: 20,
-    borderWidth: 1,
   },
   // footer
   footer: {
-    top: 250,
+    top: 300,
     alignItems: "center",
   },
   // orders
