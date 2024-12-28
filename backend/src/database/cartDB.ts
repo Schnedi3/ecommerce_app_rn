@@ -58,7 +58,7 @@ export const deleteFromCartDB = async (cartId: number, productId: number) => {
   await pool.query(deleteFromCartQuery, [cartId, productId]);
 };
 
-export const emptyCartDb = async (cartId: number) => {
+export const emptyCartDB = async (cartId: number) => {
   const emptyCartQuery = `
     DELETE FROM cart_item
     WHERE cart_id = $1`;

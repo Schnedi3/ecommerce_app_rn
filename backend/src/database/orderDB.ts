@@ -6,7 +6,7 @@ export const addOrderDB = async (
   totalCart: number
 ) => {
   const addOrderQuery = `
-    INSERT INTO "order" (user_id, cart_id, total)
+    INSERT INTO orders (user_id, cart_id, total)
     VALUES ($1, $2, $3)
     RETURNING *`;
 
