@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
+import Animated, { SlideOutRight } from "react-native-reanimated";
 
 export const CartItem = ({ item }: { item: ICartItem }) => {
   const { color } = useThemeColor();
@@ -12,7 +13,10 @@ export const CartItem = ({ item }: { item: ICartItem }) => {
   const { mutate: deleteFromCart } = useDeleteFromCart();
 
   return (
-    <View style={[styles.itemContainer, { borderBottomColor: color.border }]}>
+    <Animated.View
+      style={[styles.itemContainer, { borderBottomColor: color.border }]}
+      exiting={SlideOutRight}
+    >
       <Image source={{ uri: image }} style={styles.image} />
 
       <View style={styles.titlePrice}>
@@ -45,28 +49,28 @@ export const CartItem = ({ item }: { item: ICartItem }) => {
           {price * quantity}€
         </Text>
       </View>
-    </View>
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   itemContainer: {
-    marginHorizontal: "5%",
     paddingVertical: 15,
+    paddingHorizontal: 25,
     flexDirection: "row",
     alignItems: "center",
-    gap: 25,
     borderBottomWidth: 1,
   },
   image: {
-    width: 90,
-    height: 90,
+    width: 80,
+    height: 80,
     borderRadius: 10,
   },
   titlePrice: {
-    gap: 0,
+    paddingLeft: 20,
   },
   title: {
+    width: 250,
     fontFamily: "QuickSandSemi",
     fontSize: 16,
   },
@@ -89,6 +93,7 @@ const styles = StyleSheet.create({
   },
   deleteTotal: {
     marginLeft: "auto",
+    right: 0,
     gap: 5,
   },
   total: {
