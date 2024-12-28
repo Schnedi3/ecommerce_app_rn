@@ -1,22 +1,23 @@
 import { pool } from "./db";
 
-export const findCartDB = async (userId: string) => {
+export const createCartDB = async (userId: string) => {
+  const createCartQuery = `
+    INSERT INTO cart (user_id)
+    VALUES ($1)
+    ON CONFLICT (user_id) DO NOTHING
+    RETURNING *`;
+
+  const result = await pool.query(createCartQuery, [userId]);
+  return result.rows[0];
+};
+
+export const getCartByUserDB = async (userId: string) => {
   const findCartQuery = `
     SELECT id FROM cart
     WHERE user_id = $1`;
 
-  const foundCart = await pool.query(findCartQuery, [userId]);
-
-  if (foundCart.rows.length === 0) {
-    const createCartQuery = `
-      INSERT INTO cart (user_id)
-      VALUES ($1)
-      RETURNING *`;
-    const resultCreate = await pool.query(createCartQuery, [userId]);
-    return resultCreate.rows[0];
-  }
-
-  return foundCart.rows[0].id;
+  const result = await pool.query(findCartQuery, [userId]);
+  return result.rows[0].id;
 };
 
 export const getCartDB = async (cartId: number) => {

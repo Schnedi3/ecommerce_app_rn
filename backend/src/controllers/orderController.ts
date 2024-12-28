@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 import { addOrderDB, getUserOrdersDB } from "../database/orderDB";
-import { emptyCartDb, findCartDB } from "../database/cartDB";
+import { emptyCartDb, getCartByUserDB } from "../database/cartDB";
 
 export const addOrder = async (req: Request, res: Response): Promise<void> => {
   const { userId } = (req as any).auth;
@@ -13,7 +13,7 @@ export const addOrder = async (req: Request, res: Response): Promise<void> => {
   }
 
   try {
-    const cartId = await findCartDB(userId);
+    const cartId = await getCartByUserDB(userId);
     const result = await addOrderDB(userId, cartId, totalCart);
 
     // empty cart
