@@ -1,5 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 
 import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
@@ -13,49 +15,63 @@ export const CartItem = ({ item }: { item: ICartItem }) => {
   const { mutate: deleteFromCart } = useDeleteFromCart();
 
   return (
-    <Animated.View
-      style={[styles.itemContainer, { borderBottomColor: color.border }]}
-      exiting={SlideOutRight}
-    >
-      <Image source={{ uri: image }} style={styles.image} />
-
-      <View style={styles.titlePrice}>
-        <Text style={[styles.title, { color: color.secondaryText }]}>
-          {title}
-        </Text>
-        <View style={styles.priceQuantity}>
-          <Text style={[styles.price, { color: color.accent }]}>{price}€</Text>
-          <Text style={[styles.ex, { color: color.secondaryText }]}>x</Text>
-          <Text style={[styles.quantityText, { color: color.secondaryText }]}>
-            {quantity}
-          </Text>
-        </View>
-      </View>
-
-      <View style={styles.deleteTotal}>
-        <Pressable
-          style={{ alignSelf: "flex-end" }}
-          onPress={() => deleteFromCart(product_id)}
-        >
-          {({ pressed }) => (
+    <GestureHandlerRootView>
+      <Swipeable
+        renderRightActions={() => (
+          <Pressable
+            style={[styles.deleteButton, { backgroundColor: color.delete }]}
+            onPress={() => deleteFromCart(product_id)}
+          >
             <Ionicons
-              name="trash-outline"
+              name="trash-bin-outline"
               size={24}
-              color={pressed ? color.accent : color.secondaryText}
+              color={color.secondaryText}
             />
-          )}
-        </Pressable>
-        <Text style={[styles.total, { color: color.secondaryText }]}>
-          {price * quantity}€
-        </Text>
-      </View>
-    </Animated.View>
+          </Pressable>
+        )}
+      >
+        <Animated.View
+          style={[
+            styles.itemContainer,
+            {
+              borderBottomColor: color.border,
+              backgroundColor: color.secondaryBg,
+            },
+          ]}
+          exiting={SlideOutRight}
+        >
+          <Image source={{ uri: image }} style={styles.image} />
+
+          <View style={styles.titlePrice}>
+            <Text style={[styles.title, { color: color.secondaryText }]}>
+              {title}
+            </Text>
+            <View style={styles.priceQuantity}>
+              <Text style={[styles.price, { color: color.accent }]}>
+                {price}€
+              </Text>
+              <Text style={[styles.ex, { color: color.secondaryText }]}>x</Text>
+              <Text
+                style={[styles.quantityText, { color: color.secondaryText }]}
+              >
+                {quantity}
+              </Text>
+            </View>
+          </View>
+
+          <Text style={[styles.total, { color: color.secondaryText }]}>
+            {price * quantity}€
+          </Text>
+        </Animated.View>
+      </Swipeable>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
   itemContainer: {
     paddingVertical: 14,
+    paddingHorizontal: 20,
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,
@@ -90,13 +106,14 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandSemi",
     fontSize: 20,
   },
-  deleteTotal: {
-    marginLeft: "auto",
-    right: 0,
-    gap: 5,
-  },
   total: {
+    marginLeft: "auto",
     fontFamily: "QuickSandMedium",
     fontSize: 17,
+  },
+  deleteButton: {
+    width: 70,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

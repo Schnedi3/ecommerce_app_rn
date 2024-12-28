@@ -113,7 +113,7 @@ export default function Detail(): JSX.Element {
             },
           ]}
           onPress={
-            isAuthenticated ? handleAddToCart : () => router.push("/user")
+            isAuthenticated ? handleAddToCart : () => router.push("/profile")
           }
           disabled={isAuthenticated && inCart}
         >

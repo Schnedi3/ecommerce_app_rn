@@ -35,7 +35,10 @@ export default function Home(): JSX.Element {
       />
 
       <FlatList
-        contentContainerStyle={styles.contentContainer}
+        contentContainerStyle={[
+          styles.contentContainer,
+          { backgroundColor: color.secondaryBg },
+        ]}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         data={products as IProduct[]}
         numColumns={2}

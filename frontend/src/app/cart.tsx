@@ -42,15 +42,15 @@ export default function Cart(): JSX.Element {
         <View
           style={[styles.container, { backgroundColor: color.secondaryBg }]}
         >
-          <View>
-            <FlatList
-              style={{ backgroundColor: color.secondaryBg }}
-              contentContainerStyle={styles.contentContainer}
-              data={cart}
-              renderItem={({ item }) => <CartItem item={item} />}
-              keyExtractor={(item) => item.product_id}
-            />
+          <FlatList
+            style={{ backgroundColor: color.secondaryBg }}
+            contentContainerStyle={styles.contentContainer}
+            data={cart}
+            renderItem={({ item }) => <CartItem item={item} />}
+            keyExtractor={(item) => item.product_id}
+          />
 
+          <View style={{ marginTop: "auto", paddingBottom: 30 }}>
             <View style={styles.totalContainer}>
               <Text style={[styles.totalText, { color: color.primaryText }]}>
                 Total
@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingVertical: 10,
-    paddingHorizontal: 25,
   },
   totalContainer: {
     marginHorizontal: "5%",

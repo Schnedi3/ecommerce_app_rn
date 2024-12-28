@@ -10,6 +10,7 @@ export const lightColors = {
   accent: "#0ea5e9",
   border: "#e2e8f0",
   success: "#7abf9e",
+  delete: "#ef4444",
 };
 
 export const darkColors = {
@@ -24,4 +25,5 @@ export const darkColors = {
   accent: "#f472b6",
   border: "#34343b",
   success: "#5a9679",
+  delete: "#ef4444",
 };
