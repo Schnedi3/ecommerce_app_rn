@@ -21,7 +21,7 @@ export const ProductCard = ({
   const inCart = cart.some((item: ICartItem) => item.product_id === id);
 
   return (
-    <View style={[styles.singleCard, { backgroundColor: color.primaryBg }]}>
+    <View style={[styles.singleCard, { backgroundColor: "rgba(0,0,0,0.05)" }]}>
       <Image source={{ uri: image }} style={styles.image} />
       <View style={{ padding: 10 }}>
         <Text style={[styles.title, { color: color.secondaryText }]}>
@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   singleCard: {
     width: width / 2 - 30,
     height: width * 0.7,
+    paddingBottom: 20,
     justifyContent: "space-between",
     borderRadius: 10,
   },

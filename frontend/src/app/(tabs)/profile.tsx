@@ -17,7 +17,7 @@ enum Strategy {
   Apple = "oauth_apple",
 }
 
-export default function User(): JSX.Element {
+export default function Profile(): JSX.Element {
   useWarmUpBrowser();
   const { color } = useThemeColor();
   const { mutate: saveUser } = useSaveUser();
@@ -38,7 +38,7 @@ export default function User(): JSX.Element {
 
     try {
       const { createdSessionId, setActive } = await selectedStrategy({
-        redirectUrl: Linking.createURL("user", { scheme: "myapp" }),
+        redirectUrl: Linking.createURL("profile", { scheme: "myapp" }),
       });
 
       if (createdSessionId) {
@@ -101,7 +101,7 @@ export default function User(): JSX.Element {
         {isAuthenticated ? (
           <View style={{ alignItems: "center", gap: 15 }}>
             <Link
-              href="/(modals)/orders"
+              href="/orders"
               style={[
                 styles.orderBtn,
                 { borderColor: color.border, backgroundColor: color.primaryBg },

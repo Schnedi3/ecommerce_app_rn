@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { IOrderProps } from "@/src/types/types";
 
-export const OrderCard = ({ order }: { order: IOrderProps }) => {
+export const OrderItem = ({ order }: { order: IOrderProps }) => {
   const { color } = useThemeColor();
 
   const { created_at, image, price, quantity, title, total_price } = order;
@@ -42,7 +42,7 @@ export const OrderCard = ({ order }: { order: IOrderProps }) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingVertical: "3%",
+    paddingVertical: 14,
     gap: 10,
     borderBottomWidth: 1,
   },

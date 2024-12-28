@@ -118,7 +118,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   contentContainer: {
-    paddingVertical: 15,
+    paddingVertical: 10,
+    paddingHorizontal: 25,
   },
   totalContainer: {
     marginHorizontal: "5%",

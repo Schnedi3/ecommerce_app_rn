@@ -55,8 +55,7 @@ export const CartItem = ({ item }: { item: ICartItem }) => {
 
 const styles = StyleSheet.create({
   itemContainer: {
-    paddingVertical: 15,
-    paddingHorizontal: 25,
+    paddingVertical: 14,
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 1,

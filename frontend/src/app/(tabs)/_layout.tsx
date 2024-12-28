@@ -43,14 +43,14 @@ export default function TabLayout(): JSX.Element {
         }}
       />
       <Tabs.Screen
-        name="user"
+        name="profile"
         options={{
-          title: "User",
+          title: "Profile",
           tabBarIcon: ({ focused }) => {
             return (
               <CustomTabBarIcon
                 focused={focused}
-                label="User"
+                label="Profile"
                 iconName="user"
               />
             );

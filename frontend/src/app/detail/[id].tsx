@@ -5,7 +5,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import { router, Stack, useLocalSearchParams } from "expo-router";
@@ -57,7 +56,7 @@ export default function Detail(): JSX.Element {
   return (
     <>
       <Stack.Screen
-        options={{ header: () => <CustomHeader title={title} /> }}
+        options={{ headerShown: true, header: () => <CustomHeader title={title} /> }}
       />
 
       <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
@@ -140,7 +139,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    // padding: 30,
     gap: 20,
   },
   image: {

@@ -28,7 +28,7 @@ export const CustomHeader = ({ title }: { title: string }) => {
         {title ? title : "Loading"}
       </Text>
 
-      <Link href="/(modals)/cart" asChild>
+      <Link href="/cart" asChild>
         <TouchableOpacity activeOpacity={0.5} disabled={!isAuthenticated}>
           <AntDesign
             name="shoppingcart"

@@ -58,19 +58,16 @@ function RootLayout() {
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen
-            name="(modals)/detail/[id]"
-            options={{
-              headerShown: true,
-              animation: "slide_from_bottom",
-            }}
+            name="detail/[id]"
+            options={{ animation: "slide_from_bottom" }}
           />
           <Stack.Screen
-            name="(modals)/cart"
-            options={{ presentation: "modal", animation: "slide_from_bottom" }}
+            name="cart"
+            options={{ animation: "slide_from_bottom" }}
           />
           <Stack.Screen
-            name="(modals)/orders"
-            options={{ presentation: "modal", animation: "slide_from_bottom" }}
+            name="orders"
+            options={{ animation: "slide_from_right" }}
           />
         </Stack>
       </View>
