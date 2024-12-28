@@ -6,14 +6,16 @@ export const useSaveUser = () => {
   return useMutation({
     mutationFn: ({
       id,
-      name,
+      firstName,
+      lastName,
       email,
     }: {
       id: string;
-      name: string | null;
+      firstName: string | null;
+      lastName: string | null;
       email: string;
     }) => {
-      return customAxios.post("/auth", { id, name, email });
+      return customAxios.post("/user", { id, firstName, lastName, email });
     },
   });
 };

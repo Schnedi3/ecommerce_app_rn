@@ -11,6 +11,7 @@ import { useGetProducts } from "@/src/api/product";
 import { ProductCard } from "@/src/components/ProductCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { CustomHeader } from "@/src/components/CustomHeader";
+import { IProduct } from "@/src/types/types";
 
 export default function Home(): JSX.Element {
   const { color } = useThemeColor();
@@ -37,7 +38,7 @@ export default function Home(): JSX.Element {
         style={{ backgroundColor: color.secondaryBg }}
         contentContainerStyle={styles.contentContainer}
         columnWrapperStyle={{ justifyContent: "space-between" }}
-        data={products}
+        data={products as IProduct[]}
         numColumns={2}
         renderItem={({ item }) => (
           <Link href={`/detail/${item.id}`} asChild>

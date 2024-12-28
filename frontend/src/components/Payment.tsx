@@ -8,11 +8,7 @@ import { useAddOrder } from "@/src/api/order";
 import { SuccessModal } from "@/src/components/SuccessModal";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export const Payment = ({
-  totalCart,
-}: {
-  totalCart: number;
-}): JSX.Element => {
+export const Payment = ({ totalCart }: { totalCart: number }): JSX.Element => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -75,7 +71,7 @@ export const Payment = ({
       <SuccessModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   payment: {

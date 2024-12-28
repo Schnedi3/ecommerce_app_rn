@@ -14,22 +14,16 @@ export default function TabLayout(): JSX.Element {
         animation: "shift",
         tabBarHideOnKeyboard: true,
         tabBarStyle: {
-          height: 80,
+          height: 70,
           backgroundColor: color.primaryBg,
-          paddingTop: 23,
+          paddingTop: 15,
           borderTopWidth: 1,
           borderColor: color.border,
           elevation: 0,
         },
         tabBarShowLabel: false,
         tabBarButton: (props) => {
-          return (
-            <Pressable
-              {...props}
-              style={{ alignItems: "center" }}
-              android_ripple={null}
-            />
-          );
+          return <Pressable {...props} android_ripple={null} />;
         },
       }}
     >

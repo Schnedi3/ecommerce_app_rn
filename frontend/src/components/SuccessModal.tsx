@@ -9,10 +9,7 @@ interface IModalProps {
   setIsModalOpen: (isModalOpen: boolean) => void;
 }
 
-export const SuccessModal = ({
-  isModalOpen,
-  setIsModalOpen,
-}: IModalProps) => {
+export const SuccessModal = ({ isModalOpen, setIsModalOpen }: IModalProps) => {
   const { color } = useThemeColor();
 
   const goToHome = () => {
@@ -87,7 +84,7 @@ export const SuccessModal = ({
       </View>
     </Modal>
   );
-}
+};
 
 const styles = StyleSheet.create({
   modalContainer: {

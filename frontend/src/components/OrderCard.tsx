@@ -6,12 +6,12 @@ import { IOrderProps } from "@/src/types/types";
 export const OrderCard = ({ order }: { order: IOrderProps }) => {
   const { color } = useThemeColor();
 
-  const { createdat, image, price, quantity, title, total_price } = order;
+  const { created_at, image, price, quantity, title, total_price } = order;
 
   return (
     <View style={[styles.itemContainer, { borderBottomColor: color.border }]}>
       <Text style={[styles.date, { color: color.secondaryText }]}>
-        {new Date(createdat).toLocaleString()}
+        {new Date(created_at).toLocaleString()}
       </Text>
 
       <View style={{ flexDirection: "row", gap: 20, alignItems: "center" }}>
@@ -38,7 +38,7 @@ export const OrderCard = ({ order }: { order: IOrderProps }) => {
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   itemContainer: {

@@ -7,7 +7,7 @@ export interface IProduct {
 }
 
 export interface IOrderProps {
-  createdat: string;
+  created_at: string;
   image: string;
   price: string;
   quantity: number;

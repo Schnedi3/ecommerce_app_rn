@@ -1,12 +1,5 @@
 import { useEffect } from "react";
-import {
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
@@ -16,7 +9,7 @@ import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
 import { LoginButton } from "@/src/components/LoginButton";
 import { useAuthStore } from "@/src/store/authStore";
-import { useSaveUser } from "@/src/api/auth";
+import { useSaveUser } from "@/src/api/user";
 import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 enum Strategy {
@@ -66,7 +59,8 @@ export default function User(): JSX.Element {
     if (user) {
       saveUser({
         id: user.id,
-        name: user.firstName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.emailAddresses[0].emailAddress,
       });
     }
@@ -100,7 +94,7 @@ export default function User(): JSX.Element {
           style={[styles.avatar, { borderColor: color.primaryBg }]}
         />
         <Text style={[styles.userName, { color: color.primaryText }]}>
-          {user ? user.firstName : "Guest"}
+          {user ? user.firstName + " " + user.lastName : "Guest"}
         </Text>
         <Text
           style={[
