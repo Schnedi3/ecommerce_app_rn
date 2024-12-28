@@ -34,13 +34,16 @@ export const SuccessModal = ({ isModalOpen, setIsModalOpen }: IModalProps) => {
         <View
           style={[styles.modalContent, { backgroundColor: color.primaryBg }]}
         >
-          <Ionicons
-            name="close-outline"
-            size={26}
-            style={{ position: "absolute", top: 10, right: 10 }}
-            color={color.secondaryText}
+          <Pressable
+            style={[styles.closeButton, { backgroundColor: color.invertedBg }]}
             onPress={() => setIsModalOpen(false)}
-          />
+          >
+            <Ionicons
+              name="close-outline"
+              size={26}
+              color={color.invertedText}
+            />
+          </Pressable>
 
           <View style={{ alignItems: "center" }}>
             <Ionicons
@@ -91,6 +94,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
     position: "relative",
@@ -100,6 +104,14 @@ const styles = StyleSheet.create({
     paddingBottom: 36,
     gap: 20,
     borderRadius: 10,
+  },
+  closeButton: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    padding: 4,
+    borderTopRightRadius: 8,
+    zIndex: 1,
   },
   success: {
     fontFamily: "QuickSandBold",
