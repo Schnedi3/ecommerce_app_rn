@@ -1,4 +1,10 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
@@ -19,10 +25,7 @@ export const CartWidget = () => {
 
   return (
     <Link href="/cart" asChild>
-      <Pressable
-        style={({ pressed }) => ({ opacity: pressed ? 0.5 : 1 })}
-        disabled={!isAuthenticated}
-      >
+      <TouchableOpacity activeOpacity={0.5} disabled={!isAuthenticated}>
         <AntDesign
           name="shoppingcart"
           style={{ color: color.secondaryText, fontSize: 24 }}
@@ -34,7 +37,7 @@ export const CartWidget = () => {
             </Text>
           </View>
         )}
-      </Pressable>
+      </TouchableOpacity>
     </Link>
   );
 };
