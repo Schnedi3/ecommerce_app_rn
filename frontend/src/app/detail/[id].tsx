@@ -75,59 +75,70 @@ export default function Detail(): JSX.Element {
           </Text>
         </View>
 
-        <View style={styles.quantity}>
+        <View style={styles.footer}>
+          <View style={styles.quantity}>
+            <Pressable
+              style={({ pressed }) => [
+                styles.quantityButton,
+                {
+                  opacity: pressed ? 0.5 : 1,
+                  backgroundColor: color.border,
+                  borderBottomLeftRadius: 20,
+                },
+              ]}
+              onPress={decreaseCartQuantity}
+              disabled={quantity === 1}
+            >
+              <Ionicons
+                name="remove-outline"
+                style={[styles.quantityIcon, { color: color.secondaryText }]}
+              />
+            </Pressable>
+            <Text
+              style={[
+                styles.quantityText,
+                { color: color.secondaryText, borderColor: color.border },
+              ]}
+            >
+              {inCart ? foundProduct.quantity : quantity}
+            </Text>
+            <Pressable
+              style={({ pressed }) => [
+                styles.quantityButton,
+                { opacity: pressed ? 0.5 : 1, backgroundColor: color.border },
+              ]}
+              onPress={increaseCartQuantity}
+              disabled={!isAuthenticated}
+            >
+              <Ionicons
+                name="add-outline"
+                style={[styles.quantityIcon, { color: color.secondaryText }]}
+              />
+            </Pressable>
+          </View>
+
           <Pressable
             style={({ pressed }) => [
-              styles.quantityButton,
-              { borderColor: pressed ? color.accent : color.secondaryText },
+              styles.addButton,
+              {
+                backgroundColor:
+                  pressed || inCart ? color.accent : color.invertedBg,
+              },
             ]}
-            onPress={decreaseCartQuantity}
-            disabled={quantity === 1}
+            onPress={
+              isAuthenticated ? handleAddToCart : () => router.push("/profile")
+            }
+            disabled={isAuthenticated && inCart}
           >
-            <Ionicons
-              name="remove-outline"
-              style={[styles.quantityIcon, { color: color.secondaryText }]}
-            />
-          </Pressable>
-          <Text style={[styles.quantityText, { color: color.secondaryText }]}>
-            {inCart ? foundProduct.quantity : quantity}
-          </Text>
-          <Pressable
-            style={({ pressed }) => [
-              styles.quantityButton,
-              { borderColor: pressed ? color.accent : color.secondaryText },
-            ]}
-            onPress={increaseCartQuantity}
-            disabled={!isAuthenticated}
-          >
-            <Ionicons
-              name="add-outline"
-              style={[styles.quantityIcon, { color: color.secondaryText }]}
-            />
+            <Text style={[styles.addButtonText, { color: color.invertedText }]}>
+              {!isAuthenticated
+                ? "login first"
+                : inCart
+                ? "Already in cart"
+                : "Add to cart"}
+            </Text>
           </Pressable>
         </View>
-
-        <Pressable
-          style={({ pressed }) => [
-            styles.addButton,
-            {
-              backgroundColor:
-                pressed || inCart ? color.accent : color.invertedBg,
-            },
-          ]}
-          onPress={
-            isAuthenticated ? handleAddToCart : () => router.push("/profile")
-          }
-          disabled={isAuthenticated && inCart}
-        >
-          <Text style={[styles.addButtonText, { color: color.invertedText }]}>
-            {!isAuthenticated
-              ? "login first"
-              : inCart
-              ? "Already in cart"
-              : "Add to cart"}
-          </Text>
-        </Pressable>
       </View>
     </>
   );
@@ -200,35 +211,45 @@ const styles = StyleSheet.create({
     fontFamily: "QuickSandMedium",
     fontSize: 17,
   },
+  // footer
+  footer: {
+    flexDirection: "row",
+    paddingHorizontal: 20,
+    marginTop: "auto",
+    paddingBottom: 30,
+  },
+  // quantity
   quantity: {
-    paddingHorizontal: 26,
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
   },
   quantityButton: {
-    width: "30%",
-    paddingVertical: 14,
-    borderWidth: 1,
-    borderRadius: 4,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
   },
   quantityIcon: {
-    fontSize: 30,
+    fontSize: 25,
     textAlign: "center",
   },
   quantityText: {
-    paddingBottom: 5,
+    paddingVertical: 9,
+    paddingHorizontal: 32,
     fontFamily: "QuickSandSemi",
-    fontSize: 35,
+    fontSize: 25,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
   },
+  // add to cart
   addButton: {
-    marginHorizontal: 26,
+    flex: 1,
     padding: 16,
-    borderRadius: 4,
+    borderBottomRightRadius: 20,
   },
   addButtonText: {
     fontFamily: "QuickSandMedium",
-    fontSize: 18,
+    fontSize: 16,
     textAlign: "center",
     textTransform: "uppercase",
   },

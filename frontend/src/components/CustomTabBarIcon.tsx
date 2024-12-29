@@ -14,7 +14,7 @@ export const CustomTabBarIcon = ({
 }) => {
   const { color } = useThemeColor();
 
-  const size = focused ? 40 : 30;
+  const size = focused ? 36 : 26;
   const iconColor = focused ? color.accent : color.disabled;
   const display = focused ? "none" : "flex";
 
