@@ -1,3 +1,8 @@
+export const commonColors = {
+  whiteText: "#fafafa",
+  blackText: "#1e293b",
+};
+
 export const lightColors = {
   primaryBg: "#ffffff",
   secondaryBg: "#fafafa",

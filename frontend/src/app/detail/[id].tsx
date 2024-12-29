@@ -15,7 +15,7 @@ import { useAddToCart, useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useAuthStore } from "@/src/store/authStore";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import { CustomHeader } from "@/src/components/CustomHeader";
+import { CartWidget } from "@/src/components/CartWidget";
 
 export default function Detail(): JSX.Element {
   const [quantity, setQuantity] = useState<number>(1);
@@ -56,7 +56,10 @@ export default function Detail(): JSX.Element {
   return (
     <>
       <Stack.Screen
-        options={{ headerShown: true, header: () => <CustomHeader title={title} /> }}
+        options={{
+          headerShown: true,
+          header: () => <DetailHeader title={title} />,
+        }}
       />
 
       <View style={[styles.container, { backgroundColor: color.secondaryBg }]}>
@@ -129,6 +132,42 @@ export default function Detail(): JSX.Element {
     </>
   );
 }
+
+const DetailHeader = ({ title }: { title: string }) => {
+  const { color } = useThemeColor();
+
+  return (
+    <View
+      style={[
+        headerStyles.header,
+        {
+          borderColor: color.border,
+          backgroundColor: color.primaryBg,
+        },
+      ]}
+    >
+      <Text style={[headerStyles.title, { color: color.primaryText }]}>
+        {title ? title : "Loading..."}
+      </Text>
+      <CartWidget />
+    </View>
+  );
+};
+
+const headerStyles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+  },
+  title: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
+});
 
 const styles = StyleSheet.create({
   loading: {

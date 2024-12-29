@@ -94,9 +94,6 @@ const headerStyles = StyleSheet.create({
     justifyContent: "center",
     borderBottomWidth: 1,
   },
-  backIcon: {
-    fontSize: 26,
-  },
   title: {
     fontFamily: "QuickSandBold",
     fontSize: 20,

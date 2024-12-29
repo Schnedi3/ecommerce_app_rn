@@ -7,6 +7,7 @@ import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import Animated, { SlideOutRight } from "react-native-reanimated";
+import { commonColors } from "../constants/Colors";
 
 export const CartItem = ({ item }: { item: ICartItem }) => {
   const { color } = useThemeColor();
@@ -25,7 +26,7 @@ export const CartItem = ({ item }: { item: ICartItem }) => {
             <Ionicons
               name="trash-bin-outline"
               size={24}
-              color={color.secondaryText}
+              color={commonColors.whiteText}
             />
           </Pressable>
         )}

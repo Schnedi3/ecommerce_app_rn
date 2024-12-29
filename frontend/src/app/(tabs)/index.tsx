@@ -2,6 +2,7 @@ import {
   ActivityIndicator,
   FlatList,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -10,7 +11,7 @@ import { Link, Stack } from "expo-router";
 import { useGetProducts } from "@/src/api/product";
 import { ProductCard } from "@/src/components/ProductCard";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
-import { CustomHeader } from "@/src/components/CustomHeader";
+import { CartWidget } from "@/src/components/CartWidget";
 import { IProduct } from "@/src/types/types";
 
 export default function Home(): JSX.Element {
@@ -28,10 +29,7 @@ export default function Home(): JSX.Element {
   return (
     <>
       <Stack.Screen
-        options={{
-          headerShown: true,
-          header: () => <CustomHeader title="Home" />,
-        }}
+        options={{ headerShown: true, header: () => <HomeHeader /> }}
       />
 
       <FlatList
@@ -53,6 +51,42 @@ export default function Home(): JSX.Element {
     </>
   );
 }
+
+const HomeHeader = () => {
+  const { color } = useThemeColor();
+
+  return (
+    <View
+      style={[
+        headerStyles.header,
+        {
+          borderColor: color.border,
+          backgroundColor: color.primaryBg,
+        },
+      ]}
+    >
+      <Text style={[headerStyles.title, { color: color.primaryText }]}>
+        Home
+      </Text>
+      <CartWidget />
+    </View>
+  );
+};
+
+const headerStyles = StyleSheet.create({
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+  },
+  title: {
+    fontFamily: "QuickSandBold",
+    fontSize: 20,
+  },
+});
 
 const styles = StyleSheet.create({
   loading: {
