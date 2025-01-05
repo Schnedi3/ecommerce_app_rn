@@ -15,12 +15,12 @@ export const addOrder = async (req: Request, res: Response): Promise<void> => {
 
   try {
     const cartId = await getCartByUserDB(userId);
-    const result = await addOrderDB(userId, cartId, totalCart);
+    await addOrderDB(userId, cartId, totalCart);
 
     // empty cart
     await emptyCartDB(cartId);
 
-    res.status(200).json(result);
+    res.status(200).json({ message: "Order placed" });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }

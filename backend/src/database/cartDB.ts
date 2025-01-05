@@ -4,11 +4,9 @@ export const createCartDB = async (userId: string) => {
   const createCartQuery = `
     INSERT INTO cart (user_id)
     VALUES ($1)
-    ON CONFLICT (user_id) DO NOTHING
     RETURNING *`;
 
-  const result = await pool.query(createCartQuery, [userId]);
-  return result.rows[0];
+  await pool.query(createCartQuery, [userId]);
 };
 
 export const getCartByUserDB = async (userId: string) => {
@@ -41,12 +39,7 @@ export const addToCartDB = async (
     VALUES ($1, $2, $3)
     RETURNING *`;
 
-  const result = await pool.query(addToCartQuery, [
-    cartId,
-    productId,
-    quantity,
-  ]);
-  return result.rows[0];
+  await pool.query(addToCartQuery, [cartId, productId, quantity]);
 };
 
 export const deleteFromCartDB = async (cartId: number, productId: number) => {
@@ -63,5 +56,5 @@ export const emptyCartDB = async (cartId: number) => {
     DELETE FROM cart_item
     WHERE cart_id = $1`;
 
-  return await pool.query(emptyCartQuery, [cartId]);
+  await pool.query(emptyCartQuery, [cartId]);
 };

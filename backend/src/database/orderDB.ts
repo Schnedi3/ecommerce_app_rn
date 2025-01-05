@@ -20,17 +20,22 @@ export const addOrderDB = async (
     RETURNING *`;
 
   await pool.query(addOrderItemQuery, [result.rows[0].id, cartId]);
-  return result.rows[0];
 };
 
 export const getUserOrdersDB = async (userId: string) => {
   const getUserOrdersQuery = `
-    SELECT p.image, p.title, oi.quantity, p.price, (oi.quantity * p.price) AS total_price, o.created_at
+    SELECT
+      p.image,
+      p.title,
+      p.price,
+      oi.quantity,
+      (oi.quantity * p.price) AS total_price,
+      o.created_at
     FROM orders o
     JOIN order_item oi ON o.id = oi.order_id
     JOIN product p ON oi.product_id = p.id
     WHERE o.user_id = $1
-    ORDER BY o.created_at DESC;`;
+    ORDER BY o.created_at DESC`;
 
   const result = await pool.query(getUserOrdersQuery, [userId]);
   return result.rows;
