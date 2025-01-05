@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
 import Stripe from "stripe";
+import { getAuth } from "@clerk/express";
 
 import { STRIPE_SECRET_KEY } from "../config/config";
 
 const stripe = new Stripe(STRIPE_SECRET_KEY as string);
 
 export const paymentSheet = async (req: Request, res: Response) => {
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
   const { totalCart } = req.body;
 
   if (!userId) {

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getAuth } from "@clerk/express";
 
 import {
   addToCartDB,
@@ -8,7 +9,7 @@ import {
 } from "../database/cartDB";
 
 export const getCart = async (req: Request, res: Response): Promise<void> => {
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
 
   if (!userId) {
     res.status(401).json({ message: "Unauthorized" });
@@ -28,7 +29,7 @@ export const getCart = async (req: Request, res: Response): Promise<void> => {
 export const addToCart = async (req: Request, res: Response): Promise<void> => {
   const productId = Number(req.params.id);
   const { quantity } = req.body;
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
 
   if (!userId) {
     res.status(401).json({ message: "Unauthorized" });
@@ -50,7 +51,7 @@ export const deleteFromCart = async (
   res: Response
 ): Promise<void> => {
   const productId = Number(req.params.id);
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
 
   if (!userId) {
     res.status(401).json({ message: "Unauthorized" });

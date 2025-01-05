@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
+import { getAuth } from "@clerk/express";
 
 import { addOrderDB, getUserOrdersDB } from "../database/orderDB";
 import { emptyCartDB, getCartByUserDB } from "../database/cartDB";
 
 export const addOrder = async (req: Request, res: Response): Promise<void> => {
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
   const { totalCart } = req.body;
 
   if (!userId) {
@@ -29,7 +30,7 @@ export const getUserOrders = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { userId } = (req as any).auth;
+  const { userId } = getAuth(req);
 
   if (!userId) {
     res.status(401).json({ message: "Unauthorized" });
