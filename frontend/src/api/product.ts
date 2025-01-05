@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { customAxios } from "./customAxios";
+import { baseURL } from "@/src/constants/baseURL";
 
 export const useGetProducts = () => {
   return useQuery({
     queryKey: ["products"],
     queryFn: async () => {
-      const { data } = await customAxios.get("/product");
-      return data;
+      const response = await fetch(`${baseURL}/product`, { method: "GET" });
+      return response.json();
     },
     initialData: [],
   });
@@ -17,8 +17,10 @@ export const useGetProduct = (id: number) => {
   return useQuery({
     queryKey: ["product", id],
     queryFn: async () => {
-      const { data } = await customAxios.get(`/product/${id}`);
-      return data;
+      const response = await fetch(`${baseURL}/product/${id}`, {
+        method: "GET",
+      });
+      return response.json();
     },
   });
 };

@@ -1,8 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@clerk/clerk-expo";
 
-import { customAxios } from "./customAxios";
+import { baseURL } from "@/src/constants/baseURL";
 import { useAuthStore } from "@/src/store/authStore";
+import { useAuth } from "@clerk/clerk-expo";
 
 export const useGetCart = () => {
   const { isAuthenticated } = useAuthStore();
@@ -12,10 +12,11 @@ export const useGetCart = () => {
     queryKey: ["cart"],
     queryFn: async () => {
       const token = await getToken();
-      const { data } = await customAxios.get("/cart", {
+      const response = await fetch(`${baseURL}/cart`, {
+        method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
-      return data;
+      return response.json();
     },
     initialData: [],
     enabled: isAuthenticated,
@@ -29,13 +30,14 @@ export const useAddToCart = () => {
   return useMutation({
     mutationFn: async ({ id, quantity }: { id: number; quantity: number }) => {
       const token = await getToken();
-      return customAxios.post(
-        `/cart/${id}`,
-        { quantity },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      return fetch(`${baseURL}/cart/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ quantity }),
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -50,8 +52,9 @@ export const useDeleteFromCart = () => {
   return useMutation({
     mutationFn: async (id: number) => {
       const token = await getToken();
-      return customAxios.delete(`/cart/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      return fetch(`${baseURL}/cart/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
       });
     },
     onSuccess: () => {
