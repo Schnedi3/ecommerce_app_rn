@@ -43,7 +43,7 @@ const MyLightTheme = {
   },
 };
 
-function RootLayout() {
+function RootLayout(): JSX.Element {
   const { color, colorScheme } = useThemeColor();
 
   useFonts({

@@ -4,13 +4,13 @@ import { useClerk, useOAuth, useUser } from "@clerk/clerk-expo";
 import * as Linking from "expo-linking";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { useWarmUpBrowser } from "@/src/hooks/useWarmUpBrowser";
 import { LoginButton } from "@/src/components/LoginButton";
 import { useAuthStore } from "@/src/store/authStore";
 import { useSaveUser } from "@/src/api/user";
-import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 enum Strategy {
   Google = "oauth_google",

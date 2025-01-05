@@ -144,7 +144,7 @@ export default function Detail(): JSX.Element {
   );
 }
 
-const DetailHeader = ({ title }: { title: string }) => {
+const DetailHeader = ({ title }: { title: string }): JSX.Element => {
   const { color } = useThemeColor();
 
   return (

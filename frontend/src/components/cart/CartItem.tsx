@@ -7,9 +7,9 @@ import { useDeleteFromCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import Animated, { SlideOutRight } from "react-native-reanimated";
-import { commonColors } from "../constants/Colors";
+import { commonColors } from "@/src/constants/Colors";
 
-export const CartItem = ({ item }: { item: ICartItem }) => {
+export const CartItem = ({ item }: { item: ICartItem }): JSX.Element => {
   const { color } = useThemeColor();
 
   const { title, image, price, quantity, product_id } = item;

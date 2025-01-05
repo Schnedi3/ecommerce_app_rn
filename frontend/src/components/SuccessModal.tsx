@@ -9,7 +9,10 @@ interface IModalProps {
   setIsModalOpen: (isModalOpen: boolean) => void;
 }
 
-export const SuccessModal = ({ isModalOpen, setIsModalOpen }: IModalProps) => {
+export const SuccessModal = ({
+  isModalOpen,
+  setIsModalOpen,
+}: IModalProps): JSX.Element => {
   const { color } = useThemeColor();
 
   const goToHome = () => {

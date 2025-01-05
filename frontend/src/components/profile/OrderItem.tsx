@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { IOrderProps } from "@/src/types/types";
 
-export const OrderItem = ({ order }: { order: IOrderProps }) => {
+export const OrderItem = ({ order }: { order: IOrderProps }): JSX.Element => {
   const { color } = useThemeColor();
 
   const { created_at, image, price, quantity, title, total_price } = order;

@@ -3,7 +3,7 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 import { Stack } from "expo-router";
 
 import { useGetCart } from "@/src/api/cart";
-import { CartItem } from "@/src/components/CartItem";
+import { CartItem } from "@/src/components/cart/CartItem";
 import { ICartItem } from "@/src/types/types";
 import { Payment } from "@/src/components/Payment";
 import { useThemeColor } from "@/src/hooks/useThemeColor";

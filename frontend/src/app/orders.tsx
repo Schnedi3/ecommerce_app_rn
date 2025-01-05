@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Stack } from "expo-router";
 
 import { useGetUserOrders } from "@/src/api/order";
-import { OrderItem } from "@/src/components/OrderItem";
+import { OrderItem } from "@/src/components/profile/OrderItem";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 import { IOrderProps } from "@/src/types/types";
 

@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import { Link } from "expo-router";
 
@@ -13,7 +7,7 @@ import { useGetCart } from "@/src/api/cart";
 import { ICartItem } from "@/src/types/types";
 import { useThemeColor } from "@/src/hooks/useThemeColor";
 
-export const CartWidget = () => {
+export const CartWidget = (): JSX.Element => {
   const { color } = useThemeColor();
   const { isAuthenticated } = useAuthStore();
   const { data: cart } = useGetCart();
